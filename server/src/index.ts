@@ -1,22 +1,28 @@
 import express, { Application } from "express";
+import { connectDb } from "src/db";
 import "dotenv/config";
 
-import { connectDB } from "@/db";
-
-const PORT = process.env.PORT!;
+import authRouter from "@/routes/auth";
+import productRouter from "@/routes/product";
 
 const app: Application = express();
+const PORT = process.env.PORT!;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-connectDB();
+connectDb();
+
+// api routes
+app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to Bitesy",
+    message: "Hello from Server",
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is connected to ${PORT}`);
+  console.log("Server is connected to port 8080");
 });

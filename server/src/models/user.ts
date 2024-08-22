@@ -1,12 +1,25 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import { EUserRole } from "@/enum/user-role";
+interface UserDocument extends Document {
+  name: string;
+  email: string;
+  password: string;
+  verified: boolean;
+  tokens: string[];
+  role: EUserRole;
+  avatar: {
+    id: string;
+    url: string;
+  };
+}
+interface Methods {
+  comparePassword(password: string): Promise<boolean>;
+}
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema<UserDocument, {}, Methods>(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
+    name: {
       type: String,
       required: true,
     },
@@ -29,8 +42,28 @@ const UserSchema = new mongoose.Schema(
       url: String,
       id: String,
     },
+    role: {
+      type: String,
+      enum: EUserRole,
+      default: EUserRole.USER,
+    },
   },
   { timestamps: true }
 );
+
+UserSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
+});
+
+UserSchema.methods.comparePassword = async function (
+  password: string
+): Promise<boolean> {
+  const isMatch = await bcrypt.compare(password, this.password);
+  return isMatch;
+};
 
 export const User = mongoose.model("users", UserSchema);
