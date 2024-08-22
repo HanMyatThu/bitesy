@@ -2,7 +2,6 @@ import express, { Application } from "express";
 import "dotenv/config";
 
 import { connectDB } from "@/db";
-import exp from "constants";
 
 const PORT = process.env.PORT!;
 
