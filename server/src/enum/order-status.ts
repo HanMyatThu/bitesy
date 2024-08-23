@@ -7,3 +7,5 @@ export enum EOrderStatus {
   ORDER_CANCELLED_BY_USER = "order_cancelled_by_user",
   ORDER_CANCELLED_BY_SHOP = "order_cancelled_by_shop",
 }
+
+export const orderStatuses = Object.values(EOrderStatus);

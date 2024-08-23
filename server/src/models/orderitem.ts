@@ -3,7 +3,7 @@ import mongoose, { Document } from "mongoose";
 
 interface OrderItemDocument extends Document {
   product: mongoose.Schema.Types.ObjectId;
-  price_usd: number;
+  price: number;
   quantity: number;
   category: EOrderCategory;
   order: mongoose.Schema.Types.ObjectId;
@@ -20,7 +20,7 @@ const OrderSchema = new mongoose.Schema<OrderItemDocument>({
     required: true,
     ref: "orders",
   },
-  price_usd: {
+  price: {
     type: Number,
     required: true,
   },

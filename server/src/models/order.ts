@@ -1,17 +1,14 @@
-import { EOrderStatus } from "@/enum/order-status";
-import { IOrderItem } from "@/interfaces/IOrderItem";
 import mongoose, { Document } from "mongoose";
 
-type DateObject = {
-  year: number;
-  month: number;
-  date: number;
-};
+import { EOrderStatus } from "@/enum/order-status";
+import { IOrderItem } from "@/interfaces/IOrderItem";
+import { IDateObject } from "@/interfaces/IDateObject";
 
 interface OrderDocument extends Document {
   customer_id: mongoose.Schema.Types.ObjectId;
-  date: DateObject;
+  date: IDateObject;
   status: EOrderStatus;
+  price: number;
   items: IOrderItem[];
 }
 
@@ -36,7 +33,19 @@ const OrderSchema = new mongoose.Schema<OrderDocument>({
       required: true,
     },
   },
-  items: [{ type: mongoose.Schema.Types.ObjectId, ref: "orderitems" }],
+  price: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  items: [
+    {
+      item: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "orderitems",
+      },
+    },
+  ],
   status: {
     type: String,
     enum: EOrderStatus,

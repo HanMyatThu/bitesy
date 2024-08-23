@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
   CreateNewProduct,
   DeleteProduct,
@@ -7,11 +8,11 @@ import {
   getSingleProduct,
   UpdateProduct,
   getAllProductsBySorting,
-} from "src/controllers/productController";
-import { isAuth } from "src/middlewares/auth";
-import { fileUpload } from "src/middlewares/file-upload";
-import { validate } from "src/middlewares/validator";
-import { createNewProductSchema } from "src/validationSchemas/productSchema";
+} from "@/controllers/productController";
+import { isAuth } from "@/middlewares/auth";
+import { fileUpload } from "@/middlewares/file-upload";
+import { validate } from "@/middlewares/validator";
+import { createNewProductSchema } from "@/validationSchemas/productSchema";
 
 const productRouter = Router();
 

@@ -4,6 +4,7 @@ import { isValidObjectId } from "mongoose";
 import { User } from "@/models/user";
 import { toJson } from "@/resources/responseResource";
 import cloudUploader from "@/utils/cloudinary";
+import { EUserRole } from "@/enum/user-role";
 
 interface UserProfile {
   id: string;
@@ -11,6 +12,7 @@ interface UserProfile {
   email: string;
   verified: boolean;
   avatar: string;
+  role: EUserRole;
 }
 
 declare global {

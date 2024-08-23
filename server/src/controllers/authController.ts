@@ -7,6 +7,7 @@ import { toJson } from "@/resources/responseResource";
 import { authToken } from "@/models/authToken";
 import { SendEmail } from "@/utils/sendEmail";
 import { PasswordResetTokenModel } from "@/models/passwordResetToken";
+// import { Session } from "@/models/session";
 
 /**
  * Register User
@@ -120,6 +121,15 @@ export const signIn: RequestHandler = async (req, res) => {
     else user.tokens.push(refreshToken);
 
     await user.save();
+
+    // //create session data
+    // const broswerInfo = req.headers?.["user-agent"];
+    // const session = new Session({
+    //   userId: user._id,
+    //   broswerId: broswerInfo,
+    //   authToken: accessToken,
+    // });
+    // await session.save();
 
     return toJson(
       {
