@@ -1,9 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { Navbar } from "@/containers/navbar";
+import { ThemeProvider } from "@/components/darktheme/theme-provider";
 
 export const App = () => {
   return (
-    <div>
-      <Button variant="primary"> Hello </Button>
-    </div>
+    <>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Navbar />
+      </ThemeProvider>
+    </>
   );
 };
