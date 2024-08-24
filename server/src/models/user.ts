@@ -6,6 +6,7 @@ interface UserDocument extends Document {
   email: string;
   password: string;
   verified: boolean;
+  address: string | null;
   tokens: string[];
   role: EUserRole;
   avatar: {
@@ -35,6 +36,9 @@ const UserSchema = new mongoose.Schema<UserDocument, {}, Methods>(
     verified: {
       type: Boolean,
       default: false,
+    },
+    address: {
+      type: String,
     },
     tokens: [String],
     avatar: {
