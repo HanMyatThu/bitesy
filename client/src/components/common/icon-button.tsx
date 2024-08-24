@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 
@@ -8,21 +9,19 @@ interface IconButtonProps {
   href: string;
 }
 
-export const IconButton = ({
-  icon: Icon,
-  label,
-  href,
-}: IconButtonProps) => {
+export const IconButton = ({ icon: Icon, label, href }: IconButtonProps) => {
   return (
-    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary cursor-pointer">
-      <a href={href} className="flex flex-col items-center justify-center">
+    <Button
+      variant="ghost"
+      size="icon"
+      className="cursor-pointer text-muted-foreground hover:text-primary"
+    >
+      <Link to={href} className="flex flex-col items-center justify-center">
         <Icon className="size-5" />
         {label && (
-          <p className="text-xs text-muted-foreground font-light">
-            {label}
-          </p>
+          <p className="text-xs font-light text-muted-foreground">{label}</p>
         )}
-      </a>
+      </Link>
     </Button>
   );
-}
+};

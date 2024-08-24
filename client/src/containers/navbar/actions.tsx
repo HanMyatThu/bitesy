@@ -21,7 +21,7 @@ export const Actions = () => {
       >
         <div className="hidden md:flex lg:flex xl:flex">
           <ToolTipHint label="Orders" side="bottom">
-            <IconButton href="/" icon={NotepadText} />
+            <IconButton href="/orders" icon={NotepadText} />
           </ToolTipHint>
         </div>
         <IconButton href="/" icon={ShoppingCart} />
