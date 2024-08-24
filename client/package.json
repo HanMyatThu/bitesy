@@ -25,7 +25,8 @@
     "react-dom": "^18.3.1",
     "react-i18next": "^15.0.1",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
