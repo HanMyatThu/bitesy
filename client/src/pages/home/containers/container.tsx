@@ -3,6 +3,7 @@ import { Candy, CupSoda, Shirt, ShoppingBasket, Utensils } from "lucide-react";
 import { CategoryIcon } from "../components/category_icon";
 import { Separator } from "@/components/ui/separator";
 import { ProductItem } from "../components/product-item";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const mockCategoryData = [
   { id: 1, title: "Meal", icon: Utensils },
@@ -14,7 +15,7 @@ const mockCategoryData = [
 
 export const Container = () => {
   return (
-    <>
+    <ScrollArea className="m-0 mb-4 h-auto p-0">
       <div className="mx-auto flex h-full max-w-screen-2xl flex-row justify-center gap-x-3 text-center">
         {mockCategoryData.map((data) => (
           <CategoryIcon
@@ -34,6 +35,6 @@ export const Container = () => {
           ))}
         </div>
       </div>
-    </>
+    </ScrollArea>
   );
 };

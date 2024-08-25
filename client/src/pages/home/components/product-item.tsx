@@ -4,9 +4,13 @@ import { PlusCircle } from "lucide-react";
 
 export const ProductItem = () => {
   return (
-    <div className="h-full w-full space-y-2">
+    <div className="mt-4 h-full w-full space-y-4">
       <div>
-        <img src="/images/logo.png" alt="product" className="object-fill" />
+        <img
+          src="/images/logo.png"
+          alt="product"
+          className="aspect-video object-cover"
+        />
       </div>
       <div className="flex flex-row justify-between">
         <div className="pl-2">
