@@ -1,3 +1,9 @@
+import { PastItemsResult } from "./past-items.result";
+
 export const PastItems = () => {
-  return <div>Past Items</div>;
+  return (
+    <div className="mb-16">
+      <PastItemsResult />
+    </div>
+  );
 };
