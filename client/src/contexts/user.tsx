@@ -1,11 +1,19 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
-import { EUserRole, IUser } from "@/interfaces/Iuser";
+import { EUserRole, IUser } from "@/interfaces/IUser";
 
 interface IUserContextData {
   user: IUser;
   isNormalUser: boolean;
-  isLoading: boolean;
+  isAuthenticated: boolean;
+  setUser: Dispatch<IUser>;
 }
 
 interface IProps {
@@ -17,19 +25,17 @@ const UserContext = createContext<IUserContextData>({} as IUserContextData);
 const UserProvider = ({ children }: IProps) => {
   const [user, setUser] = useState({} as IUser);
 
-  //fetch API here
-  const isLoading = false;
   const value = useMemo(() => {
     return {
       user,
+      isAuthenticated: !!user.role,
       isNormalUser: user.role && user.role === EUserRole.USER,
+      setUser,
     };
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ ...value, isLoading }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ ...value }}>{children}</UserContext.Provider>
   );
 };
 

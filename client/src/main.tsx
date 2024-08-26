@@ -1,19 +1,23 @@
 import { Fragment, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
+import { RouterProvider } from "@tanstack/react-router";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 import { UserProvider } from "@/contexts/user.tsx";
+import { queryClient } from "@/services/query-client.ts";
 import { router } from "./routes.ts";
 
 import "./index.css";
 import "@/services/i18n.ts";
-import { RouterProvider } from "@tanstack/react-router";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const AppProvider = () => (
   <Suspense fallback={<Fragment />}>
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </QueryClientProvider>
   </Suspense>
 );
 

@@ -1,4 +1,4 @@
-import { NotepadText, ShoppingCart } from "lucide-react";
+import { LogIn, NotepadText, ShoppingCart } from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
 
 import { UserAvatar } from "./avatar";
@@ -7,9 +7,16 @@ import { IconButton } from "@/components/common/icon-button";
 import { ToolTipHint } from "@/components/common/tooltip-hint";
 import { LanguagePicker } from "@/components/language/language-picker";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/contexts/user";
+import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
+
+  const { isAuthenticated } = useUser();
+
+  console.log(isAuthenticated, "user");
 
   return (
     <div className="ml-4 flex items-center justify-end gap-x-2 lg:ml-0">
@@ -28,7 +35,15 @@ export const Actions = () => {
         <ToggleTheme />
         <LanguagePicker />
         <div className="hidden md:flex lg:flex xl:flex">
-          <UserAvatar imageUrl="/images/logo.png" isActive size="default" />
+          {!isAuthenticated ? (
+            <Link to="/sign-in" className="justify-center text-center">
+              <Button variant="ghost">
+                Sign In <LogIn className="ml-1 mt-1 size-4" />
+              </Button>
+            </Link>
+          ) : (
+            <UserAvatar imageUrl="/images/logo.png" isActive size="default" />
+          )}
         </div>
       </div>
     </div>

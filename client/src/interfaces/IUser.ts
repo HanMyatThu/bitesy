@@ -9,6 +9,7 @@ export interface IUser {
     id?: string;
     url?: string;
   };
+  promotions: string[];
 }
 
 export enum EUserRole {

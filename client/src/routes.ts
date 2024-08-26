@@ -8,8 +8,9 @@ import { App } from "./App";
 import { HomePage } from "@/pages/home";
 import { NotFoundPage } from "@/pages/notfound";
 import { OrderPage } from "@/pages/orders";
-import { IUser } from "@/interfaces/Iuser";
+import { IUser } from "@/interfaces/IUser";
 import { SignIn } from "@/pages/auth/sign-in";
+import { SignUp } from "./pages/auth/sign-up";
 
 interface IRouterContext {
   user: IUser;
@@ -31,6 +32,12 @@ export const signInRoute = createRoute({
   component: SignIn,
 });
 
+export const signUpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/sign-up",
+  component: SignUp,
+});
+
 export const orderRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/orders",
@@ -43,7 +50,12 @@ export const notFoundRoute = createRoute({
   component: NotFoundPage,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, orderRoute, signInRoute]);
+const routeTree = rootRoute.addChildren([
+  homeRoute,
+  orderRoute,
+  signInRoute,
+  signUpRoute,
+]);
 
 export const router = createRouter({
   routeTree,
