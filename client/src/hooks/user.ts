@@ -3,22 +3,24 @@ import { useMutation } from "@tanstack/react-query";
 import { api } from "@/services/api-client";
 import { IUser } from "@/interfaces/IUser";
 import { queryClient } from "@/services/query-client";
-
-interface IUserApiResponse {
-  profile: IUser;
-}
+import { AxiosError } from "axios";
 
 type tokens = {
   refresh: string;
   accessToken: string;
 };
 
-interface IUserLoginResponse extends IUserApiResponse {
-  tokens: tokens;
+interface IUserLoginResponse {
+  data: {
+    profile: IUser;
+    tokens: tokens;
+  };
+  error: null | { message: string };
 }
 
 interface IUserRegisterResponse {
   message: string;
+  error: null | { message: string };
 }
 
 interface IPayload {
@@ -30,16 +32,23 @@ interface IPayload {
 export function useUserLogin() {
   async function fetchUserLogin(payload: IPayload) {
     const { data } = await api.post<IUserLoginResponse>(`/api/auth/sign-in`, {
-      params: {
-        ...payload,
-      },
+      ...payload,
     });
 
-    return data;
+    //save token in session storage
+    if (data.data.tokens) {
+      sessionStorage.setItem("accesstoken", data.data.tokens.accessToken);
+      sessionStorage.setItem("refreshtoken", data.data.tokens.refresh);
+    }
+    return data.data;
   }
 
   return useMutation({
     mutationFn: fetchUserLogin,
+    onError: (e) => {
+      const error = e as AxiosError<IUserLoginResponse>;
+      throw new Error(error.response?.data.error?.message);
+    },
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["user-login"] }),
   });
@@ -50,9 +59,7 @@ export function useUserRegister() {
     const { data } = await api.post<IUserRegisterResponse>(
       `/api/auth/sign-up`,
       {
-        params: {
-          ...payload,
-        },
+        ...payload,
       },
     );
 
@@ -61,6 +68,10 @@ export function useUserRegister() {
 
   return useMutation({
     mutationFn: fetchUserRegister,
+    onError: (e) => {
+      const error = e as AxiosError<IUserRegisterResponse>;
+      throw new Error(error.response?.data.error?.message);
+    },
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["user-signup"] }),
   });

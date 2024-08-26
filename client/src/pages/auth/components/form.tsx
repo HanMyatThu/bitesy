@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AlertOctagon, Loader2Icon } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,19 +18,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { useUserLogin, useUserRegister } from "@/hooks/user";
 import { getErrorMessage } from "@/lib/common";
-
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@$!%#*?&]{8,}$/;
+import { useUser } from "@/contexts/user";
 
 interface AuthFormProps {
   isSignIn: boolean;
 }
 
 export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
+  const navigate = useNavigate();
+  const { setUser } = useUser();
   const {
     data: loginData,
     mutateAsync,
-    error: loginFormError,
+    isError: loginFormError,
     isSuccess: isLoginSuccess,
     reset: mutateReset,
   } = useUserLogin();
@@ -37,7 +38,7 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
   const {
     data: singUpData,
     mutateAsync: userRegisterAsync,
-    error: sigupFormError,
+    isError: sigupFormError,
     reset: userRegisterReset,
     isSuccess: isRegisterSuccess,
   } = useUserRegister();
@@ -47,21 +48,32 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
     mutateReset();
   }, [mutateReset, userRegisterReset]);
 
-  console.log(isLoginSuccess, loginData, "login");
-  console.log(isRegisterSuccess, singUpData, "login");
+  useEffect(() => {
+    if (isSignIn && loginData?.profile && isLoginSuccess) {
+      setUser(loginData.profile);
+      toast.success("You have login successfully");
+      setTimeout(() => {
+        navigate({ to: "/" });
+      }, 3000);
+    } else if (isSignIn && singUpData?.message && isRegisterSuccess) {
+      toast.success(singUpData.message);
+    }
+  }, [
+    isSignIn,
+    loginData,
+    isLoginSuccess,
+    isRegisterSuccess,
+    singUpData,
+    setUser,
+    navigate,
+  ]);
 
   const formSchema = z.object({
     email: z
       .string()
       .min(1, { message: "This field has to be filled." })
       .email("Please enter a valid email"),
-    password: z
-      .string()
-      .min(8, "Password should have minimum 8 charactors.")
-      .refine(
-        (value) => passwordRegex.test(value ?? ""),
-        "Please enter a strong password",
-      ),
+    password: z.string(),
     name: !isSignIn
       ? z.string().min(1, "Please Enter Your Name")
       : z.string().optional(),
@@ -77,16 +89,15 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    form.clearErrors();
     try {
       if (isSignIn) {
-        mutateAsync({
+        await mutateAsync({
           email: data.email,
           password: data.password,
         });
       } else {
-        userRegisterAsync({
+        await userRegisterAsync({
           email: data.email,
           password: data.password,
           name: data.name,
@@ -94,7 +105,6 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
       }
     } catch (e) {
       const message = getErrorMessage(e);
-
       form.setError("root", {
         message,
       });
@@ -166,25 +176,25 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
             </FormItem>
           )}
         />
-        <div className="flex justify-between">
+        <div className="flex justify-between text-center">
           <Button size="default" type="submit" className="rounded-lg">
             {isSignIn ? "Sign In" : "Sign Up"}
+            {form.formState.isSubmitting && (
+              <Loader2Icon className="ml-2 size-4 animate-spin" />
+            )}
           </Button>
-          {form.formState.isSubmitting && (
-            <Loader2Icon className="h-3 w-3 animate-spin" />
-          )}
           <Link to={isSignIn ? "/sign-up" : "/sign-in"}>
             <Button variant="link">{label}</Button>
           </Link>
         </div>
       </form>
       {(loginFormError || sigupFormError) && (
-        <section className="flex flex-1 gap-2 p-2">
-          <AlertOctagon className="h-3 w-3 text-destructive 2xl:h-4 2xl:w-4" />
-          <p className="text-xs text-destructive 2xl:text-sm 2xl:leading-none">
+        <div className="justify-left flex flex-1 gap-x-2 p-2">
+          <AlertOctagon className="mt-1 size-3 text-destructive md:size-4" />
+          <p className="text-sm text-destructive 2xl:text-sm 2xl:leading-none">
             {form.formState.errors.root?.message}
           </p>
-        </section>
+        </div>
       )}
     </Form>
   );
