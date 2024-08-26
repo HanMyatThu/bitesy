@@ -33,7 +33,6 @@ passResetSchema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
     this.token = await bcrypt.hash(this.token, salt);
   }
-
   next();
 });
 

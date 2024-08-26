@@ -1,10 +1,8 @@
-import { TPromotionConfig } from "./../interfaces/IPromotion";
 import mongoose, { Document } from "mongoose";
 
 interface PromotionDocument extends Document {
   name: string;
-  config: TPromotionConfig;
-  points_multiplier: number;
+  config: mongoose.Schema.Types.ObjectId;
 }
 
 const PromotionSchema = new mongoose.Schema<PromotionDocument>({
@@ -13,7 +11,9 @@ const PromotionSchema = new mongoose.Schema<PromotionDocument>({
     required: true,
   },
   config: {
-    type: Object,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "promotion-types",
+    required: true,
   },
 });
 
