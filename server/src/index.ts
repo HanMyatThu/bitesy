@@ -6,6 +6,7 @@ import { connectDb } from "@/db";
 import authRouter from "@/routes/auth";
 import productRouter from "@/routes/product";
 import orderRouter from "@/routes/order";
+import dbSeedRouter from "@/routes/seed";
 
 const app: Application = express();
 const PORT = process.env.PORT!;
@@ -20,6 +21,7 @@ connectDb();
 app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api", dbSeedRouter);
 
 app.get("/", (req, res) => {
   res.json({

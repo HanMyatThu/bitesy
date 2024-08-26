@@ -6,7 +6,6 @@ interface OrderItemDocument extends Document {
   price: number;
   quantity: number;
   category: EOrderCategory;
-  order: mongoose.Schema.Types.ObjectId;
 }
 
 const OrderItemSchema = new mongoose.Schema<OrderItemDocument>({
@@ -14,11 +13,6 @@ const OrderItemSchema = new mongoose.Schema<OrderItemDocument>({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "products",
-  },
-  order: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "orders",
   },
   price: {
     type: Number,
