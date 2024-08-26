@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { JsonOne } from "src/resources/responseResource";
+import { toJson } from "src/resources/responseResource";
 import * as yup from "yup";
 
 export const validate = (schema: yup.Schema): RequestHandler => {
@@ -12,9 +12,9 @@ export const validate = (schema: yup.Schema): RequestHandler => {
       next();
     } catch (error) {
       if (error instanceof yup.ValidationError) {
-        JsonOne(null, 422, error.message, res);
+        toJson(null, 422, error.message, res);
       } else {
-        JsonOne(null, 422, "Server Error", res);
+        toJson(null, 422, "Server Error", res);
       }
     }
   };

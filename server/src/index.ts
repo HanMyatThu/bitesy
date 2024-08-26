@@ -1,7 +1,8 @@
 import express, { Application } from "express";
-import { connectDb } from "src/db";
+import cors from "cors";
 import "dotenv/config";
 
+import { connectDb } from "@/db";
 import authRouter from "@/routes/auth";
 import productRouter from "@/routes/product";
 import orderRouter from "@/routes/order";
@@ -11,6 +12,7 @@ const PORT = process.env.PORT!;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 connectDb();
 

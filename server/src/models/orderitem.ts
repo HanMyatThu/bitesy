@@ -9,7 +9,7 @@ interface OrderItemDocument extends Document {
   order: mongoose.Schema.Types.ObjectId;
 }
 
-const OrderSchema = new mongoose.Schema<OrderItemDocument>({
+const OrderItemSchema = new mongoose.Schema<OrderItemDocument>({
   product: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -35,4 +35,4 @@ const OrderSchema = new mongoose.Schema<OrderItemDocument>({
   },
 });
 
-export const OrderItem = mongoose.model("orders", OrderSchema);
+export const OrderItem = mongoose.model("order-items", OrderItemSchema);

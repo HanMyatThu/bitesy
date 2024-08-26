@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
-import { toJson } from "src/resources/responseResource";
-import "dotenv/config";
 import jwt, { TokenExpiredError } from "jsonwebtoken";
+
+import { toJson } from "src/resources/responseResource";
 import { User } from "src/models/user";
 import { PasswordResetTokenModel } from "src/models/passwordResetToken";
 

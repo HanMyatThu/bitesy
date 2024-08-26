@@ -106,13 +106,16 @@ export const signIn: RequestHandler = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return toJson(null, 403, "Invalid Credentials", res);
 
+    if (!user.verified)
+      return toJson(null, 401, "User's Email is not verified yet", res);
+
     const isMatched = await user.comparePassword(password);
     if (!isMatched) return toJson(null, 403, "Invalid Credentials", res);
 
     const payload = { id: user._id };
 
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET!, {
-      expiresIn: "15m",
+      expiresIn: "30m",
     });
 
     const refreshToken = jwt.sign(payload, process.env.JWT_SECRET!);
@@ -134,9 +137,14 @@ export const signIn: RequestHandler = async (req, res) => {
     return toJson(
       {
         profile: {
+          id: user._id,
+          address: user.address,
           email: user.email,
           name: user.name,
           verified: user.verified,
+          role: user.role,
+          avatar: user.avatar,
+          promotions: user.promotions,
         },
         tokens: {
           refresh: refreshToken,

@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+
 import { api } from "@/services/api-client";
 import { IUser } from "@/interfaces/IUser";
 import { queryClient } from "@/services/query-client";
@@ -28,7 +29,7 @@ interface IPayload {
 
 export function useUserLogin() {
   async function fetchUserLogin(payload: IPayload) {
-    const { data } = await api.post<IUserLoginResponse>(`/api/auth/login`, {
+    const { data } = await api.post<IUserLoginResponse>(`/api/auth/sign-in`, {
       params: {
         ...payload,
       },
@@ -47,7 +48,7 @@ export function useUserLogin() {
 export function useUserRegister() {
   async function fetchUserRegister(payload: IPayload) {
     const { data } = await api.post<IUserRegisterResponse>(
-      `/api/auth/register`,
+      `/api/auth/sign-up`,
       {
         params: {
           ...payload,

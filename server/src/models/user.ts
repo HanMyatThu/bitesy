@@ -13,6 +13,7 @@ interface UserDocument extends Document {
     id: string;
     url: string;
   };
+  promotions: [string];
 }
 interface Methods {
   comparePassword(password: string): Promise<boolean>;
@@ -51,6 +52,7 @@ const UserSchema = new mongoose.Schema<UserDocument, {}, Methods>(
       enum: EUserRole,
       default: EUserRole.USER,
     },
+    promotions: [{ type: mongoose.Schema.Types.ObjectId }],
   },
   { timestamps: true }
 );
