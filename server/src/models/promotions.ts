@@ -16,3 +16,5 @@ const PromotionSchema = new mongoose.Schema<PromotionDocument>({
     type: Object,
   },
 });
+
+export const Promotion = mongoose.model("promotions", PromotionSchema);
