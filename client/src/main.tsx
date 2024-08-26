@@ -3,19 +3,24 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 
-import { UserProvider } from "@/contexts/user.tsx";
+import { UserProvider, useUser } from "@/contexts/user.tsx";
 import { queryClient } from "@/services/query-client.ts";
 import { router } from "./routes.ts";
 
 import "./index.css";
 import "@/services/i18n.ts";
 
+const InnerApp = () => {
+  const { user, isAuthenticated } = useUser();
+  return <RouterProvider router={router} context={{ user, isAuthenticated }} />;
+};
+
 // eslint-disable-next-line react-refresh/only-export-components
 const AppProvider = () => (
   <Suspense fallback={<Fragment />}>
     <QueryClientProvider client={queryClient}>
       <UserProvider>
-        <RouterProvider router={router} />
+        <InnerApp />
       </UserProvider>
     </QueryClientProvider>
   </Suspense>

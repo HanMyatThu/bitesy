@@ -2,6 +2,7 @@ import {
   createRootRouteWithContext,
   createRoute,
   createRouter,
+  redirect,
 } from "@tanstack/react-router";
 import { App } from "./App";
 
@@ -14,6 +15,7 @@ import { SignUp } from "./pages/auth/sign-up";
 
 interface IRouterContext {
   user: IUser;
+  isAuthenticated: boolean;
 }
 
 export const rootRoute = createRootRouteWithContext<IRouterContext>()({
@@ -29,12 +31,32 @@ export const homeRoute = createRoute({
 export const signInRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/sign-in",
+  beforeLoad: ({ context, location }) => {
+    if (context.isAuthenticated) {
+      throw redirect({
+        to: "/",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
   component: SignIn,
 });
 
 export const signUpRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/sign-up",
+  beforeLoad: ({ context, location }) => {
+    if (context.isAuthenticated) {
+      throw redirect({
+        to: "/",
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
   component: SignUp,
 });
 
@@ -61,6 +83,7 @@ export const router = createRouter({
   routeTree,
   context: {
     user: {} as IUser,
+    isAuthenticated: false,
   },
   defaultNotFoundComponent: NotFoundPage,
 });

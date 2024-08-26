@@ -1,7 +1,11 @@
-import { LogIn, NotepadText, ShoppingCart } from "lucide-react";
+import {
+  ExternalLinkIcon,
+  LogIn,
+  NotepadText,
+  ShoppingCart,
+} from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
 
-import { UserAvatar } from "./avatar";
 import { ToggleTheme } from "@/components/darktheme/toggle-theme";
 import { IconButton } from "@/components/common/icon-button";
 import { ToolTipHint } from "@/components/common/tooltip-hint";
@@ -14,9 +18,9 @@ import { Button } from "@/components/ui/button";
 export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
 
-  const { isAuthenticated } = useUser();
-
-  console.log(isAuthenticated, "user");
+  const { user, isAuthenticated } = useUser();
+  console.log(user.name, "user");
+  console.log(isAuthenticated, "isAuthenticated");
 
   return (
     <div className="ml-4 flex items-center justify-end gap-x-2 lg:ml-0">
@@ -42,7 +46,14 @@ export const Actions = () => {
               </Button>
             </Link>
           ) : (
-            <UserAvatar imageUrl="/images/logo.png" isActive size="default" />
+            <Button
+              size="default"
+              variant="ghost"
+              className="flex flex-row gap-x-1"
+            >
+              <ExternalLinkIcon className="size-3" />
+              <p className="text-sm text-primary">Sign Out</p>
+            </Button>
           )}
         </div>
       </div>

@@ -25,6 +25,7 @@ const UserContext = createContext<IUserContextData>({} as IUserContextData);
 const UserProvider = ({ children }: IProps) => {
   const [user, setUser] = useState({} as IUser);
 
+  console.log(user, "user");
   const value = useMemo(() => {
     return {
       user,
