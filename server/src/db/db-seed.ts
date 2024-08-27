@@ -17,6 +17,8 @@ import {
 import { OrderItem } from "@/models/orderitem";
 import { Order } from "@/models/order";
 import { RequestHandler } from "express";
+import { TierModal } from "@/models/tier";
+import { BonusPoint } from "@/models/bonus-point";
 
 const promotionTypes = [
   {
@@ -251,7 +253,7 @@ const products = [
  * for the purpose of testing and simulating the program
  * 1. Promotions Type First
  * 2. create promotions
- * 3. create 3 mock up users with promotions
+ * 3. create 3 mock up users with promotions, bonus points and tiers
  * 4. create 15` products
  * 5. create order, first get random user, get some random products, create order item and then create order with order items ids
  * 6. db is seeded successfully
@@ -276,6 +278,7 @@ export const dbSeed: RequestHandler = async (req, res) => {
       const data = new Promotion({
         name: promotion.name,
         config: findId[0]._id,
+        amount: promotion.amount,
       });
       return data.save();
     });
@@ -294,6 +297,24 @@ export const dbSeed: RequestHandler = async (req, res) => {
       return data.save();
     });
     const userResults = await Promise.all(userPromises);
+
+    // create tier for each user
+    const tierPromises = userResults.map((user) => {
+      const data = new TierModal({
+        user: user._id,
+      });
+      return data.save();
+    });
+    await Promise.all(tierPromises);
+
+    // create bonus points for each user
+    const bonusPromises = userResults.map((user) => {
+      const data = new BonusPoint({
+        user: user._id,
+      });
+      return data.save();
+    });
+    await Promise.all(bonusPromises);
     console.log("users created successfully");
 
     //4 . create products
