@@ -5,6 +5,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
+import { toast } from "sonner";
 
 import { ToggleTheme } from "@/components/darktheme/toggle-theme";
 import { IconButton } from "@/components/common/icon-button";
@@ -18,9 +19,13 @@ import { Button } from "@/components/ui/button";
 export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
 
-  const { user, isAuthenticated } = useUser();
-  console.log(user.name, "user");
-  console.log(isAuthenticated, "isAuthenticated");
+  const { isAuthenticated } = useUser();
+
+  const handleOpenCart = () => {
+    if (!isAuthenticated) {
+      toast.error("Please Sign In First");
+    }
+  };
 
   return (
     <div className="ml-4 flex items-center justify-end gap-x-2 lg:ml-0">
@@ -35,7 +40,7 @@ export const Actions = () => {
             <IconButton href="/orders" icon={NotepadText} />
           </ToolTipHint>
         </div>
-        <IconButton href="/" icon={ShoppingCart} />
+        <IconButton href="/" icon={ShoppingCart} onClick={handleOpenCart} />
         <ToggleTheme />
         <LanguagePicker />
         <div className="hidden md:flex lg:flex xl:flex">

@@ -73,7 +73,7 @@ export const Container = () => {
 
   if (isLoading) {
     return (
-      <div className="m-0 mb-4 h-auto p-0">
+      <div className="m-0 mb-4 mt-24 h-auto p-0">
         <div className="mx-auto flex h-full max-w-screen-2xl flex-row justify-center gap-x-8 text-center">
           {[...Array(5)].map((_, i) => (
             <CategoryIconSeketon key={`category-skeleton-${i}`} />
@@ -93,7 +93,7 @@ export const Container = () => {
   }
 
   return (
-    <ScrollArea className="m-0 mb-4 h-auto p-0">
+    <ScrollArea className="my-24 h-auto px-4">
       <div className="mx-auto flex h-full max-w-screen-2xl flex-row justify-center gap-x-3 text-center">
         {categoryData.map((data) => (
           <CategoryIcon
@@ -111,7 +111,7 @@ export const Container = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
           {products.map((product) => (
             <ProductItem
-              key={product.id}
+              key={product.name}
               data={product}
               onClick={onClickAddToCart}
             />

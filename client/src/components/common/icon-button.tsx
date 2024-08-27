@@ -7,11 +7,18 @@ interface IconButtonProps {
   icon: LucideIcon;
   label?: string;
   href: string;
+  onClick?: () => void;
 }
 
-export const IconButton = ({ icon: Icon, label, href }: IconButtonProps) => {
+export const IconButton = ({
+  icon: Icon,
+  label,
+  href,
+  onClick,
+}: IconButtonProps) => {
   return (
     <Button
+      onClick={onClick}
       variant="ghost"
       size="icon"
       className="cursor-pointer text-muted-foreground hover:text-primary"

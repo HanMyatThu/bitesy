@@ -11,7 +11,7 @@ interface ProductItemProps {
 
 export const ProductItem = ({ data, onClick }: ProductItemProps) => {
   return (
-    <div className="mt-4 h-full w-full space-y-4">
+    <div className="mt-4 space-y-4">
       <div className="group relative hover:shadow-lg">
         <div
           onClick={onClick}
