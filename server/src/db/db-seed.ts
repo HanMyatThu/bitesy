@@ -41,18 +41,22 @@ const promotions = [
   {
     name: "Get Your Promotion on purchasing many items!",
     type: EPromotionType.ORDER_MIN_QUANTITY,
+    amount: 2.99,
   },
   {
-    name: "Get Your Promotion on Minimum Order Amount!",
+    name: "Get Discount on minimum order!",
     type: EPromotionType.ORDER_MIN_TOTAL_PRICE,
+    amount: 6.0,
   },
   {
     name: "Get Your Promotion on Specific Item!",
     type: EPromotionType.ITEM_CATEGORY,
+    amount: 0.5,
   },
   {
-    name: "Get Your Promotion on a special day",
+    name: "Get Your Promotion on a Special day!",
     type: EPromotionType.ORDER_DAY_OF_PURCAHSE,
+    amount: 3.99,
   },
 ];
 
