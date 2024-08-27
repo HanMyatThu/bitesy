@@ -6,7 +6,7 @@ import categories from "@/enum/categories";
 import { Product } from "@/models/product";
 import { productResource } from "@/resources/responseFormat";
 import { toJson } from "@/resources/responseResource";
-import cloudUploader, { cloudApi } from "@/utils/cloudinary";
+import cloudUploader from "@/utils/cloudinary";
 
 const uploadImage = (filePath: string): Promise<UploadApiResponse> => {
   return cloudUploader.upload(filePath, {
@@ -279,17 +279,27 @@ export const getProductByCategory: RequestHandler = async (req, res) => {
  */
 export const getAllProductsBySorting: RequestHandler = async (req, res) => {
   try {
-    const { pageNo = "1", limit = "5" } = req.query;
+    const { pageNo, limit, category } = req.query;
     //pagination
-    const productsCount = await Product.find().countDocuments();
-    const products = await Product.find()
-      .sort("-createdAt")
-      .skip((Number(pageNo) - 1) * Number(limit))
-      .limit(Number(limit));
-    const productsCollection = productResource(products);
+    let productsCount = 0;
+    let products;
+    if (category?.length) {
+      console.log("here");
+      productsCount = await Product.find({ category }).countDocuments();
+      products = await Product.find({ category })
+        .sort("-createdAt")
+        .skip((Number(pageNo) - 1) * Number(limit))
+        .limit(Number(limit));
+    } else {
+      productsCount = await Product.find().countDocuments();
+      products = await Product.find()
+        .sort("-createdAt")
+        .skip((Number(pageNo) - 1) * Number(limit))
+        .limit(Number(limit));
+    }
     toJson(
       {
-        products: productsCollection,
+        products: products,
         pagination: {
           currentPage: pageNo,
           limit,
