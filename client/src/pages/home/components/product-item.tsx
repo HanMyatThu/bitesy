@@ -1,26 +1,42 @@
 import { ToolTipHint } from "@/components/common/tooltip-hint";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { IProduct } from "@/interfaces/IProduct";
+import { PlusCircle, ShoppingCart } from "lucide-react";
 
-export const ProductItem = () => {
+interface ProductItemProps {
+  data: IProduct;
+  onClick: () => void;
+}
+
+export const ProductItem = ({ data, onClick }: ProductItemProps) => {
   return (
     <div className="mt-4 h-full w-full space-y-4">
-      <div>
+      <div className="group relative hover:shadow-lg">
+        <div
+          onClick={onClick}
+          className="absolute top-[45%] flex h-6 w-full cursor-pointer flex-row justify-center text-center opacity-0 transition group-hover:bg-white/80 group-hover:opacity-90 dark:text-black/80"
+        >
+          <ShoppingCart className="mr-2 mt-1 size-4" /> Add
+        </div>
         <img
-          src="/images/logo.png"
-          alt="product"
+          src={data.image?.url}
+          alt={data.name}
           className="aspect-video object-cover"
         />
       </div>
       <div className="flex flex-row justify-between">
         <div className="pl-2">
-          <p className="text-md font-semibold hover:text-blue-600">KFC</p>
-          <p className="text-xs font-light text-muted-foreground">$25</p>
+          <p className="text-md font-semibold hover:text-blue-600">
+            {data.name}
+          </p>
+          <p className="text-xs font-light text-muted-foreground">{`& ${data.price}`}</p>
           <p className="text-xs font-semibold text-muted-foreground">4.0 ★</p>
         </div>
         <div>
           <ToolTipHint label="add to cart" asChild side="left">
             <Button
+              onClick={onClick}
               className="hover:bg-white dark:bg-background"
               variant="ghost"
               size="icon"
@@ -28,6 +44,26 @@ export const ProductItem = () => {
               <PlusCircle className="size-5" stroke="orange" />
             </Button>
           </ToolTipHint>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ProductItemSkeleton = () => {
+  return (
+    <div className="mt-4 flex h-full w-full flex-col space-y-4">
+      <div className="h-30 aspect-video">
+        <Skeleton className="h-full w-full" />
+      </div>
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-col gap-y-1 pl-2">
+          <Skeleton className="h-2 w-8" />
+          <Skeleton className="h-2 w-8" />
+          <Skeleton className="h-2 w-8" />
+        </div>
+        <div>
+          <Skeleton className="size-4" />
         </div>
       </div>
     </div>

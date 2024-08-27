@@ -4,8 +4,9 @@ import {
   createRouter,
   redirect,
 } from "@tanstack/react-router";
-import { App } from "./App";
+import * as z from "zod";
 
+import { App } from "./App";
 import { HomePage } from "@/pages/home";
 import { NotFoundPage } from "@/pages/notfound";
 import { OrderPage } from "@/pages/orders";
@@ -18,6 +19,12 @@ interface IRouterContext {
   isAuthenticated: boolean;
 }
 
+const productSearchSchema = z.object({
+  pageNo: z.string().default("1").optional(),
+  category: z.string().catch("").optional(),
+  limit: z.string().default("8").optional(),
+});
+
 export const rootRoute = createRootRouteWithContext<IRouterContext>()({
   component: App,
 });
@@ -26,17 +33,20 @@ export const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: HomePage,
+  validateSearch: productSearchSchema,
 });
 
 export const signInRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/sign-in",
-  beforeLoad: ({ context, location }) => {
+  beforeLoad: ({ context }) => {
     if (context.isAuthenticated) {
       throw redirect({
         to: "/",
         search: {
-          redirect: location.href,
+          pageNo: "1",
+          category: "",
+          limit: "8",
         },
       });
     }
@@ -47,12 +57,14 @@ export const signInRoute = createRoute({
 export const signUpRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/sign-up",
-  beforeLoad: ({ context, location }) => {
+  beforeLoad: ({ context }) => {
     if (context.isAuthenticated) {
       throw redirect({
         to: "/",
         search: {
-          redirect: location.href,
+          pageNo: "1",
+          category: "",
+          limit: "8",
         },
       });
     }
