@@ -6,7 +6,7 @@ import { PastItems } from "../components/past-items";
 
 export const Container = () => {
   return (
-    <div>
+    <div className="mt-20">
       <Tabs defaultValue="pastorders" className="w-full">
         <TabsList className="flex w-full flex-row justify-between">
           <TabsTrigger className="w-full" value="pastorders">

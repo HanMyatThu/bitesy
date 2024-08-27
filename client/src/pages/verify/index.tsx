@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export const VerifyUser = () => {
   const { id, token } = verifyRoute.useSearch();
-  const { mutateAsync, data, isPending, isSuccess, isError } = useVerifyUser();
+  const { mutateAsync, data, isPending, isSuccess, error } = useVerifyUser();
 
   useEffect(() => {
     if (id && token) {
@@ -23,7 +23,7 @@ export const VerifyUser = () => {
     }
   }, [data]);
 
-  if (!id || !token || isError) {
+  if (!id || !token || error) {
     return (
       <div className="my-auto flex h-[500px] w-full flex-col justify-center text-center">
         <div className="mx-auto">

@@ -15,15 +15,19 @@ import { cn } from "@/lib/utils";
 import { useUser } from "@/contexts/user";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/use-cart";
 
 export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
 
   const { isAuthenticated } = useUser();
+  const { onExpend } = useCartStore((state) => state);
 
   const handleOpenCart = () => {
     if (!isAuthenticated) {
       toast.error("Please Sign In First");
+    } else {
+      onExpend();
     }
   };
 
