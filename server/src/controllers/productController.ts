@@ -284,7 +284,6 @@ export const getAllProductsBySorting: RequestHandler = async (req, res) => {
     let productsCount = 0;
     let products;
     if (category?.length) {
-      console.log("here");
       productsCount = await Product.find({ category }).countDocuments();
       products = await Product.find({ category })
         .sort("-createdAt")

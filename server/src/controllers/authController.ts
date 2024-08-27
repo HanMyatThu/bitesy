@@ -37,7 +37,7 @@ export const createNewUser: RequestHandler = async (req, res) => {
       owner: user._id,
       token,
     });
-    const link = `https://bitesy.drazcoding.com/verify-user?id=${user._id}&token=${token}`;
+    const link = `${process.env.VERIFICATION_LINK}?id=${user._id}&token=${token}`;
 
     //verify email
     await SendEmail(
@@ -172,7 +172,7 @@ export const generateVerificationLink: RequestHandler = async (req, res) => {
     await authToken.findOneAndDelete({ owner: id });
     await authToken.create({ owner: id, token });
 
-    const link = `https://bitesy.drazcoding.com/verify-user?id=${id}&token=${token}`;
+    const link = `${process.env.VERIFICATION_LINK}?id=${id}&token=${token}`;
 
     //verify email
     await SendEmail(
