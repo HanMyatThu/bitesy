@@ -55,7 +55,7 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
       setTimeout(() => {
         navigate({ to: "/" });
       }, 3000);
-    } else if (isSignIn && singUpData?.message && isRegisterSuccess) {
+    } else if (!isSignIn && singUpData?.message && isRegisterSuccess) {
       toast.success(singUpData.message);
     }
   }, [

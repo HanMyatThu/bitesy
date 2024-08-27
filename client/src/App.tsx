@@ -10,7 +10,7 @@ export const App = () => {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Navbar />
-        <div className="flex h-full pt-20">
+        <div className="flex h-full">
           <Outlet />
         </div>
         <Footer />

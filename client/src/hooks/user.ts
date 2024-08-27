@@ -19,7 +19,7 @@ interface IUserLoginResponse {
 }
 
 interface IUserRegisterResponse {
-  message: string;
+  data: { message: string };
   error: null | { message: string };
 }
 
@@ -63,7 +63,7 @@ export function useUserRegister() {
       },
     );
 
-    return data;
+    return data.data;
   }
 
   return useMutation({
