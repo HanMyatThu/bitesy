@@ -18,7 +18,6 @@ export function useOrderList() {
     queryKey: ["order-lists-1"],
     queryFn: fetchOrderList,
     initialData: [] as IOrder[],
-    staleTime: 8 * 60 * 60 * 1000, // 8h
   });
 
   return query;

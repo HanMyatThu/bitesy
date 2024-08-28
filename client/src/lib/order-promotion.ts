@@ -46,7 +46,7 @@ export const getTotalPrice = (
       );
       const orderAmount: number = priceWithoutValidItems + promotedPrice;
       return {
-        totalPrice: orderAmount,
+        totalPrice: parseFloat(orderAmount.toFixed(2)),
         promotion_amount: Number(
           Number(totalPriceForItems - promotedPrice).toFixed(2),
         ),
@@ -67,7 +67,7 @@ export const getTotalPrice = (
       }, 0);
       return {
         totalPrice: isValidPromotion
-          ? totalPrice - selectedPromotion.amount
+          ? parseFloat((totalPrice - selectedPromotion.amount).toFixed(2))
           : totalPrice,
         promotion_amount: isValidPromotion ? selectedPromotion.amount : 0,
       };
@@ -85,9 +85,11 @@ export const getTotalPrice = (
       }, 0);
       return {
         totalPrice: isValidPromotion
-          ? totalPrice - selectedPromotion.amount
-          : totalPrice,
-        promotion_amount: isValidPromotion ? selectedPromotion.amount : 0,
+          ? parseFloat((totalPrice - selectedPromotion.amount).toFixed(2))
+          : parseFloat(totalPrice.toFixed(2)),
+        promotion_amount: isValidPromotion
+          ? parseFloat(selectedPromotion.amount.toFixed(2))
+          : 0,
       };
     }
 
@@ -103,7 +105,7 @@ export const getTotalPrice = (
         totalPrice >= selectedPromotion.config.min_order_total_price_usd! || 0;
       return {
         totalPrice: isValidPrmotion
-          ? totalPrice - selectedPromotion.amount
+          ? parseFloat((totalPrice - selectedPromotion.amount).toFixed(2))
           : totalPrice,
         promotion_amount: isValidPrmotion ? selectedPromotion.amount : 0,
       };
