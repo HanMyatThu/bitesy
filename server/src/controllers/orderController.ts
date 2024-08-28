@@ -84,3 +84,24 @@ export const updateOrder: RequestHandler = async (req, res) => {
     toJson(null, 500, "Server Error", res);
   }
 };
+
+/**
+ * Get Orders by Users
+ * 1. check if user is authenticated user
+ * 2. find orders from database by user
+ * 3. return the order response
+ */
+export const getLatestOrderlist: RequestHandler = async (req, res) => {
+  try {
+    console.log("hi");
+    const { id } = req.user;
+    const orders = await Order.find({ customer_id: id })
+      .sort("-createdAt")
+      .populate("items.item");
+
+    toJson(orders, 200, null, res);
+  } catch (e) {
+    console.log(e, "e");
+    toJson(null, 500, "Server Error", res);
+  }
+};

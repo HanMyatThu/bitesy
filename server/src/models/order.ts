@@ -14,53 +14,56 @@ interface OrderDocument extends Document {
   promotion_amount: number | 0;
 }
 
-const OrderSchema = new mongoose.Schema<OrderDocument>({
-  customer_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "users",
-  },
-  date: {
-    type: Object,
-    year: {
-      type: Number, // e.g. 2024
+const OrderSchema = new mongoose.Schema<OrderDocument>(
+  {
+    customer_id: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
-    },
-    month: {
-      type: Number, // range from 0-11
-      required: true,
+      ref: "users",
     },
     date: {
-      type: Number, // range from 1-31
-      required: true,
-    },
-  },
-  price: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  promotion_amount: {
-    type: Number,
-    default: 0,
-  },
-  items: [
-    {
-      item: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "orderitems",
+      type: Object,
+      year: {
+        type: Number, // e.g. 2024
+        required: true,
+      },
+      month: {
+        type: Number, // range from 0-11
+        required: true,
+      },
+      date: {
+        type: Number, // range from 1-31
+        required: true,
       },
     },
-  ],
-  status: {
-    type: String,
-    enum: EOrderStatus,
-    default: EOrderStatus.PAYMENT_PROCESSING,
+    price: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    promotion_amount: {
+      type: Number,
+      default: 0,
+    },
+    items: [
+      {
+        item: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "order-items",
+        },
+      },
+    ],
+    status: {
+      type: String,
+      enum: EOrderStatus,
+      default: EOrderStatus.PAYMENT_PROCESSING,
+    },
+    promotion: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "promotions",
+    },
   },
-  promotion: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "promotions",
-  },
-});
+  { timestamps: true }
+);
 
 export const Order = mongoose.model("orders", OrderSchema);
