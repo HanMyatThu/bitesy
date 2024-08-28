@@ -1,18 +1,66 @@
 import { ICartItem } from "@/interfaces/ICartItem";
 import { EPromotionType, IPromotion } from "@/interfaces/IPromotion";
-import { getDayNameValue } from "./common";
+import { getDayNameValue, subtractNonNegative } from "./common";
 
-export const getTotalPrice = (promotions: IPromotion[], items: ICartItem[]) => {
-  console.log(promotions, "promotions");
-  if (promotions.length === 0) {
+export const getTotalPrice = (
+  promotions: IPromotion[],
+  items: ICartItem[],
+  selected: string,
+) => {
+  if (promotions.length === 0 || !selected || selected === "none") {
     const totalPrice = items.reduce((accumulator, item) => {
       const price = parseFloat(item.price);
       return accumulator + price * item.quantity;
     }, 0);
-    return totalPrice.toFixed(2);
+    return {
+      totalPrice: totalPrice,
+      promotion_amount: 0,
+    };
+  } else {
+    const selectedPromotion = promotions.find(
+      (promo) => promo._id === selected,
+    );
+    // check if user use promotion.type === 'ITEM_CATEGORY'
+    const categoryPromotion =
+      selectedPromotion?.config.type === EPromotionType.ITEM_CATEGORY;
+    if (categoryPromotion) {
+      //find an item with same category in order items
+      const getConfigValue = selectedPromotion.config.item_category;
+      const validItems = items.filter(
+        (item) => item.category === getConfigValue,
+      );
+      const totalPrice = items.reduce((accumulator, item) => {
+        const price = parseFloat(item.price);
+        return accumulator + price * item.quantity;
+      }, 0);
+      const totalPriceForItems = validItems.reduce((accumulator, item) => {
+        const price = parseFloat(item.price);
+        return accumulator + price * item.quantity;
+      }, 0);
+      const promotedPrice = subtractNonNegative(
+        totalPriceForItems,
+        selectedPromotion.amount,
+      );
+      const priceWithoutValidItems: number = Number(
+        (totalPrice - totalPriceForItems).toFixed(2),
+      );
+      const orderAmount: number = priceWithoutValidItems + promotedPrice;
+      return {
+        totalPrice: orderAmount,
+        promotion_amount: Number(
+          Number(totalPriceForItems - promotedPrice).toFixed(2),
+        ),
+      };
+    }
   }
 };
 
+/**
+ *
+ * @param promotions : IPromotion[] ( Promotions that user have)
+ * @param selected : string  (selected value from select input)
+ * @returns label : string (prpmotion details)
+ */
 export const getPromotionDetail = (
   promotions: IPromotion[],
   selected: string,

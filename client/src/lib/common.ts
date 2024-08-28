@@ -65,3 +65,7 @@ export const getDayNameValue = (day?: number) => {
       return "Sunday";
   }
 };
+
+export const subtractNonNegative = (a: number, b: number) => {
+  return Math.max(a - b, 0);
+};

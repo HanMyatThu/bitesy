@@ -18,6 +18,7 @@ import { getTotalPrice } from "@/lib/order-promotion";
 import { useUser } from "@/contexts/user";
 import { Promotion } from "./promotion";
 import { CartItem } from "./cart-item";
+import { useState } from "react";
 
 export const Cart = () => {
   const {
@@ -29,6 +30,7 @@ export const Cart = () => {
     clearCartItem,
   } = useCartStore((state) => state);
   const { user, isAuthenticated } = useUser();
+  const [selected, setSelected] = useState("");
 
   if (!user || !isAuthenticated) {
     return null;
@@ -54,6 +56,8 @@ export const Cart = () => {
     clearCartItem();
     toast.info("You have cleared your shopping cart!");
   };
+
+  const priceInfo = getTotalPrice(user.promotions, items, selected);
 
   return (
     <Drawer open={collapsed} direction="right">
@@ -96,7 +100,11 @@ export const Cart = () => {
                   </Button>
                 </div>
                 <div className="flex items-center px-2">
-                  <Promotion promotions={user.promotions} />
+                  <Promotion
+                    promotions={user.promotions}
+                    value={selected}
+                    setValue={setSelected}
+                  />
                 </div>
               </>
             ) : (
@@ -110,13 +118,21 @@ export const Cart = () => {
           </ScrollArea>
         </DrawerHeader>
         <DrawerFooter className="fixed bottom-0 w-full">
-          <div className="mt-5 justify-end text-right">
+          <div className="mt-5 flex flex-col justify-end text-right">
             <div className="font-mono text-sm">
-              Total Price - {`$ ${getTotalPrice([], items)}`}
+              Total Price - {`$ ${priceInfo?.totalPrice}`}
             </div>
+            <p className="font-mono text-xs text-muted-foreground">
+              Discount Price - {`$ ${priceInfo?.promotion_amount}`}
+            </p>
           </div>
-          <Button onClick={() => {}} variant="default" disabled={!items.length}>
-            Checkout
+          <Button
+            onClick={() => {}}
+            variant="default"
+            disabled={!items.length}
+            className="text-blue-900"
+          >
+            Checkout {`$ ${priceInfo?.totalPrice}`}
             {/* {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />} */}
           </Button>
         </DrawerFooter>

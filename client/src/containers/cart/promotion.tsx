@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/select";
 import { IPromotion } from "@/interfaces/IPromotion";
 import { getPromotionDetail } from "@/lib/order-promotion";
-import { useState } from "react";
 
 interface PromotionProps {
   promotions: IPromotion[];
+  value: string;
+  setValue: (value: string) => void;
 }
 
-export const Promotion = ({ promotions }: PromotionProps) => {
-  const [value, setValue] = useState("");
+export const Promotion = ({ promotions, value, setValue }: PromotionProps) => {
   return (
     <div className="flex w-full flex-col gap-y-1">
       <Select onValueChange={(e) => setValue(e)}>
@@ -26,7 +26,9 @@ export const Promotion = ({ promotions }: PromotionProps) => {
           <SelectGroup>
             <SelectItem value={"none"}>No Promotion .. </SelectItem>
             {promotions.map((promo) => (
-              <SelectItem value={promo._id}>{promo.name}</SelectItem>
+              <SelectItem key={promo._id} value={promo._id}>
+                {promo.name}
+              </SelectItem>
             ))}
           </SelectGroup>
         </SelectContent>
