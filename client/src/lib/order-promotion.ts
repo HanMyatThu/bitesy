@@ -52,6 +52,62 @@ export const getTotalPrice = (
         ),
       };
     }
+
+    //check if user use promotion.type === specific day
+    const dayPromotion =
+      selectedPromotion?.config.type === EPromotionType.ORDER_DAY_OF_PURCAHSE;
+    if (dayPromotion) {
+      const today = new Date();
+      const dayIndex = today.getDay();
+
+      const isValidPromotion = dayIndex === selectedPromotion.config.day;
+      const totalPrice = items.reduce((accumulator, item) => {
+        const price = parseFloat(item.price);
+        return accumulator + price * item.quantity;
+      }, 0);
+      return {
+        totalPrice: isValidPromotion
+          ? totalPrice - selectedPromotion.amount
+          : totalPrice,
+        promotion_amount: isValidPromotion ? selectedPromotion.amount : 0,
+      };
+    }
+
+    // check if user use promotion.type === min quantity
+    const minQuantityPromotion =
+      selectedPromotion?.config.type === EPromotionType.ORDER_MIN_QUANTITY;
+    if (minQuantityPromotion) {
+      const isValidPromotion =
+        items.length >= selectedPromotion.config.min_order_item_quantity! || 0;
+      const totalPrice = items.reduce((accumulator, item) => {
+        const price = parseFloat(item.price);
+        return accumulator + price * item.quantity;
+      }, 0);
+      return {
+        totalPrice: isValidPromotion
+          ? totalPrice - selectedPromotion.amount
+          : totalPrice,
+        promotion_amount: isValidPromotion ? selectedPromotion.amount : 0,
+      };
+    }
+
+    // check if user promotion.type === min amount
+    const minAmountPromotion =
+      selectedPromotion?.config.type === EPromotionType.ORDER_MIN_TOTAL_PRICE;
+    if (minAmountPromotion) {
+      const totalPrice = items.reduce((accumulator, item) => {
+        const price = parseFloat(item.price);
+        return accumulator + price * item.quantity;
+      }, 0);
+      const isValidPrmotion =
+        totalPrice >= selectedPromotion.config.min_order_total_price_usd! || 0;
+      return {
+        totalPrice: isValidPrmotion
+          ? totalPrice - selectedPromotion.amount
+          : totalPrice,
+        promotion_amount: isValidPrmotion ? selectedPromotion.amount : 0,
+      };
+    }
   }
 };
 

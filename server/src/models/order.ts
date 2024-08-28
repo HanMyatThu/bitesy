@@ -10,11 +10,7 @@ interface OrderDocument extends Document {
   status: EOrderStatus;
   price: number;
   items: IOrderItem[];
-  promotions: [
-    {
-      promotion: mongoose.Schema.Types.ObjectId;
-    },
-  ];
+  promotion: mongoose.Schema.Types.ObjectId | null;
   promotion_amount: number | 0;
 }
 
@@ -61,13 +57,10 @@ const OrderSchema = new mongoose.Schema<OrderDocument>({
     enum: EOrderStatus,
     default: EOrderStatus.PAYMENT_PROCESSING,
   },
-  promotions: [
-    {
-      promotion: {
-        type: mongoose.Schema.Types.ObjectId,
-      },
-    },
-  ],
+  promotion: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "promotions",
+  },
 });
 
 export const Order = mongoose.model("orders", OrderSchema);

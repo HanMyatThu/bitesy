@@ -99,7 +99,7 @@ export const Cart = () => {
                     Remove All Items <Trash className="size-3" />
                   </Button>
                 </div>
-                <div className="flex items-center px-2">
+                <div className="mb-6 flex items-center px-2">
                   <Promotion
                     promotions={user.promotions}
                     value={selected}

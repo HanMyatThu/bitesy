@@ -103,7 +103,13 @@ export const verifyEmail: RequestHandler = async (req, res) => {
 export const signIn: RequestHandler = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate({
+      path: "promotions",
+      populate: {
+        path: "config",
+        model: "promotion-types",
+      },
+    });
     if (!user) return toJson(null, 403, "Invalid Credentials", res);
 
     if (!user.verified)
@@ -156,6 +162,7 @@ export const signIn: RequestHandler = async (req, res) => {
       res
     );
   } catch (e) {
+    console.log(e, "e");
     toJson(null, 500, "Server Error", res);
   }
 };

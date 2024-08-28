@@ -52,7 +52,7 @@ const UserSchema = new mongoose.Schema<UserDocument, {}, Methods>(
       enum: EUserRole,
       default: EUserRole.USER,
     },
-    promotions: [{ type: mongoose.Schema.Types.ObjectId }],
+    promotions: [{ type: mongoose.Schema.Types.ObjectId, ref: "promotions" }],
   },
   { timestamps: true }
 );
