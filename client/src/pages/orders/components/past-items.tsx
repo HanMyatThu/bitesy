@@ -1,9 +1,19 @@
+import { IOrder } from "@/interfaces/IOrder";
 import { PastItemsResult } from "./past-items.result";
 
-export const PastItems = () => {
+interface PastItemsProps {
+  data: IOrder[];
+}
+export const PastItems = ({ data }: PastItemsProps) => {
   return (
     <div className="mb-16">
-      <PastItemsResult />
+      {data.map((order) => (
+        <PastItemsResult
+          key={order._id}
+          imageUrl={order.items[0].item.product.image.url}
+          items={order.items}
+        />
+      ))}
     </div>
   );
 };

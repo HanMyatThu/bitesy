@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
-import { Button } from "../ui/button";
-import { ToolTipHint } from "./tooltip-hint";
+
+import { Button } from "@/components/ui/button";
+import { ToolTipHint } from "@/components/common/tooltip-hint";
 
 interface CardItemProps {
   imageUrl: string;
@@ -16,18 +17,19 @@ export const CardItem = ({
   price,
 }: CardItemProps) => {
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="group flex flex-col gap-y-2 transition-all">
       <div className="relative" onClick={onClick}>
         <img
           src={imageUrl}
           alt="product-items"
-          className="aspect-video object-cover"
+          className="aspect-video object-cover transition-all group-hover:opacity-70 group-hover:shadow-lg"
         />
         <div className="absolute bottom-2 right-2">
           <ToolTipHint asChild side="bottom" label="Add to Cart">
             <Button
               variant="ghost"
-              className="rounded-full bg-white hover:bg-white/80"
+              size="icon"
+              className="rounded-full bg-white hover:bg-white/80 dark:bg-orange-500 dark:hover:bg-orange-700"
             >
               <Plus className="size-4" />
             </Button>

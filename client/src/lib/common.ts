@@ -69,3 +69,8 @@ export const getDayNameValue = (day?: number) => {
 export const subtractNonNegative = (a: number, b: number) => {
   return Math.max(a - b, 0);
 };
+
+export const getDateValue = (year: number, month: number, day: number) => {
+  const date = new Date(year, month, day);
+  return date.toLocaleDateString();
+};

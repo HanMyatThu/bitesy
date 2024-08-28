@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { CircleX, Loader2Icon, Mail, Verified } from "lucide-react";
+import { CircleX, Mail, Verified } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { verifyRoute } from "@/routes";
 import { useVerifyUser } from "@/hooks/verify-user";
 import { useEffect } from "react";
+import { Loading } from "@/components/common/loading";
 
 export const VerifyUser = () => {
   const { id, token } = verifyRoute.useSearch();
@@ -41,13 +42,7 @@ export const VerifyUser = () => {
   }
 
   if (isPending) {
-    return (
-      <div className="my-auto flex h-[500px] w-full flex-col justify-center text-center">
-        <div className="mx-auto">
-          <Loader2Icon className="size-12 animate-spin" />
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (isSuccess && data) {
