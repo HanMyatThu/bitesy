@@ -21,7 +21,7 @@ export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
 
   const { isAuthenticated } = useUser();
-  const { onExpend } = useCartStore((state) => state);
+  const { onExpend, items } = useCartStore((state) => state);
 
   const handleOpenCart = () => {
     if (!isAuthenticated) {
@@ -44,7 +44,19 @@ export const Actions = () => {
             <IconButton href="/orders" icon={NotepadText} />
           </ToolTipHint>
         </div>
-        <IconButton href="/" icon={ShoppingCart} onClick={handleOpenCart} />
+        <Button
+          onClick={handleOpenCart}
+          variant="ghost"
+          size="icon"
+          className="relative flex cursor-pointer flex-col items-center justify-center text-muted-foreground hover:text-primary"
+        >
+          {items.length > 0 && (
+            <div className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-red-700 text-white ring-1 ring-red-600">
+              <p className="text-xs">{items.length}</p>
+            </div>
+          )}
+          <ShoppingCart className="size-5" />
+        </Button>
         <ToggleTheme />
         <LanguagePicker />
         <div className="hidden md:flex lg:flex xl:flex">

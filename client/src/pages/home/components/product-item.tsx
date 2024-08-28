@@ -6,15 +6,18 @@ import { PlusCircle, ShoppingCart } from "lucide-react";
 
 interface ProductItemProps {
   data: IProduct;
-  onClick: () => void;
+  onClick: (product: IProduct) => void;
 }
 
 export const ProductItem = ({ data, onClick }: ProductItemProps) => {
+  const handleOnClick = () => {
+    onClick(data);
+  };
   return (
     <div className="mt-4 space-y-4">
       <div className="group relative hover:shadow-lg">
         <div
-          onClick={onClick}
+          onClick={handleOnClick}
           className="absolute top-[45%] flex h-6 w-full cursor-pointer flex-row justify-center text-center opacity-0 transition group-hover:bg-white/80 group-hover:opacity-90 dark:text-black/80"
         >
           <ShoppingCart className="mr-2 mt-1 size-4" /> Add
@@ -36,7 +39,7 @@ export const ProductItem = ({ data, onClick }: ProductItemProps) => {
         <div>
           <ToolTipHint label="add to cart" asChild side="left">
             <Button
-              onClick={onClick}
+              onClick={handleOnClick}
               className="hover:bg-white dark:bg-background"
               variant="ghost"
               size="icon"

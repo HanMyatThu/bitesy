@@ -8,6 +8,7 @@ interface IconButtonProps {
   label?: string;
   href: string;
   onClick?: () => void;
+  info?: number;
 }
 
 export const IconButton = ({
@@ -15,6 +16,7 @@ export const IconButton = ({
   label,
   href,
   onClick,
+  info,
 }: IconButtonProps) => {
   return (
     <Button
@@ -23,7 +25,15 @@ export const IconButton = ({
       size="icon"
       className="cursor-pointer text-muted-foreground hover:text-primary"
     >
-      <Link to={href} className="flex flex-col items-center justify-center">
+      <Link
+        to={href}
+        className="relative flex flex-col items-center justify-center"
+      >
+        {info! > 0 && (
+          <div className="absolute -right-1 -top-1 flex size-3 items-center justify-center rounded-full bg-red-700 text-white ring-1 ring-red-600">
+            <p className="text-xs">{info}</p>
+          </div>
+        )}
         <Icon className="size-5" />
         {label && (
           <p className="text-xs font-light text-muted-foreground">{label}</p>

@@ -28,34 +28,43 @@ export const CartItem = ({
     <div className="relative">
       <div className="grid grid-cols-3">
         <div>
-          <img src={item.imageUrl} alt={`shopping-item-${item.id}`} />
+          <img
+            src={item.imageUrl}
+            alt={`shopping-item-${item.id}`}
+            className="aspect-video object-fill"
+          />
         </div>
-        <div className="col-span-2 flex flex-row justify-between">
-          <div>
-            <div className="font-mono text-sm font-semibold">{item.name}</div>
-            <div className="text-xs text-muted-foreground">Size - 7</div>
-          </div>
-          <div className="justify-left flex flex-row gap-x-2 text-left">
-            <MinusSquare
-              className="mt-1 size-4"
-              onClick={() => handleCartQuantity(0)}
-            />
-            <div>{item.quantity}</div>
-            <PlusSquare
-              className="mt-1 size-4"
-              onClick={() => handleCartQuantity(1)}
-            />
-          </div>
-          <div>
-            <div className="text-sm text-card-foreground">
-              {`$ ${Number(item.quantity * Number(item.price))}`}
+        <div className="col-span-2 justify-end">
+          <div className="flex flex-row justify-between">
+            <div className="ml-2">
+              <div className="font-mono text-sm font-semibold">{item.name}</div>
+              <div className="text-xs text-muted-foreground">
+                {item.category}
+              </div>
             </div>
-            <div
-              onClick={() => removeCartItem(item.id)}
-              className="absolute bottom-5 right-0 flex cursor-pointer flex-row gap-x-1 text-xs text-red-600"
-            >
-              Remove
-              <Trash2Icon className="mt-0.5 size-3" />
+
+            <div className="flex flex-row gap-x-6">
+              <div className="justify-left flex flex-row gap-x-2 text-left">
+                <MinusSquare
+                  className="mt-1 size-4"
+                  onClick={() => handleCartQuantity(0)}
+                />
+                <div>{item.quantity}</div>
+                <PlusSquare
+                  className="mt-1 size-4"
+                  onClick={() => handleCartQuantity(1)}
+                />
+              </div>
+              <div className="text-sm text-card-foreground">
+                {`$ ${Number(item.quantity * Number(item.price)).toFixed(2)}`}
+              </div>
+              <div
+                onClick={() => removeCartItem(item.id)}
+                className="absolute bottom-5 right-0 flex cursor-pointer flex-row gap-x-1 text-xs text-red-600 dark:text-red-400"
+              >
+                Remove
+                <Trash2Icon className="mt-0.5 size-3" />
+              </div>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ interface CartStore {
 
 export const useCartStore = create<CartStore>((set) => ({
   items: [],
-  collapsed: true,
+  collapsed: false,
   updateCartItem: (newItems: ICartItem[]) => set(() => ({ items: newItems })),
   removeCartItem: (currentItems: ICartItem[], id: string) =>
     set(() => ({ items: currentItems.filter((item) => item.id !== id) })),

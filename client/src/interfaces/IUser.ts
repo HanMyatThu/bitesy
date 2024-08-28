@@ -1,3 +1,5 @@
+import { IPromotion } from "@/interfaces/IPromotion";
+
 export interface IUser {
   id: string;
   name: string;
@@ -9,7 +11,7 @@ export interface IUser {
     id?: string;
     url?: string;
   };
-  promotions: string[];
+  promotions: IPromotion[];
 }
 
 export enum EUserRole {

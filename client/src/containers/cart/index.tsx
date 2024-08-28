@@ -1,5 +1,6 @@
 // import { useEffect } from "react";
-// import { toast } from "sonner";
+import { toast } from "sonner";
+import { ShoppingBag, Trash, X } from "lucide-react";
 
 import {
   Drawer,
@@ -10,11 +11,13 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CartItem } from "./cart-item";
 import { useCartStore } from "@/store/use-cart";
+import { getTotalPrice } from "@/lib/order-promotion";
+import { useUser } from "@/contexts/user";
+import { Promotion } from "./promotion";
+import { CartItem } from "./cart-item";
 
 export const Cart = () => {
   const {
@@ -25,6 +28,32 @@ export const Cart = () => {
     removeCartItem,
     clearCartItem,
   } = useCartStore((state) => state);
+  const { user, isAuthenticated } = useUser();
+
+  if (!user || !isAuthenticated) {
+    return null;
+  }
+
+  const handleCartUpdate = (id: string, quantity: number) => {
+    const updatedItems = items.map((item) => {
+      if (item.id === id) {
+        item.quantity = quantity;
+      }
+      return item;
+    });
+    updateCartItem(updatedItems);
+    toast.info("You have updated item's quantity");
+  };
+
+  const handleRemove = (id: string) => {
+    removeCartItem(items, id);
+    toast.info("You have removed an item from your cart!");
+  };
+
+  const handleRemoveAll = () => {
+    clearCartItem();
+    toast.info("You have cleared your shopping cart!");
+  };
 
   return (
     <Drawer open={collapsed} direction="right">
@@ -33,7 +62,7 @@ export const Cart = () => {
           <DrawerTitle className="flex flex-row gap-x-2 font-sans font-semibold">
             Check Out <ShoppingBag className="size-4" />
           </DrawerTitle>
-          <DrawerDescription>
+          <DrawerDescription className="flex justify-start">
             You have {items.length} items inside your cart.
           </DrawerDescription>
           <div
@@ -51,12 +80,24 @@ export const Cart = () => {
                   return (
                     <CartItem
                       item={item}
-                      updateCartItem={updateCartItem}
-                      removeCartItem={removeCartItem}
+                      updateCartItem={handleCartUpdate}
+                      removeCartItem={handleRemove}
                       key={`cart-item-${item.id}`}
                     />
                   );
                 })}
+                <div className="mb-2 flex justify-end">
+                  <Button
+                    onClick={() => handleRemoveAll()}
+                    variant="ghost"
+                    className="flex flex-row gap-x-2 text-xs font-semibold text-red-900 hover:bg-white/90 hover:text-red-500 dark:text-red-400 dark:hover:bg-primary-foreground"
+                  >
+                    Remove All Items <Trash className="size-3" />
+                  </Button>
+                </div>
+                <div className="flex items-center px-2">
+                  <Promotion promotions={user.promotions} />
+                </div>
               </>
             ) : (
               <div
@@ -71,7 +112,7 @@ export const Cart = () => {
         <DrawerFooter className="fixed bottom-0 w-full">
           <div className="mt-5 justify-end text-right">
             <div className="font-mono text-sm">
-              {/* Total Price - {`$ ${getTotalPrice()}`} */}
+              Total Price - {`$ ${getTotalPrice([], items)}`}
             </div>
           </div>
           <Button onClick={() => {}} variant="default" disabled={!items.length}>

@@ -4,5 +4,5 @@ export interface ICartItem {
   name: string;
   category: string;
   quantity: number;
-  imageUrl: string;
+  imageUrl: string | undefined;
 }

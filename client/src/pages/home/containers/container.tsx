@@ -19,6 +19,9 @@ import { Button } from "@/components/ui/button";
 import { homeRoute } from "@/routes";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user";
+import { IProduct } from "@/interfaces/IProduct";
+import { useCartStore } from "@/store/use-cart";
+import { addCartItem } from "@/lib/common";
 
 const categoryData = [
   { id: 1, title: "Meal", icon: Utensils, value: "meal" },
@@ -30,6 +33,7 @@ const categoryData = [
 
 export const Container = () => {
   const { isAuthenticated } = useUser();
+  const { items, updateCartItem, onExpend } = useCartStore((state) => state);
   const navigate = useNavigate();
   const { pageNo = "1", category = "", limit = "8" } = homeRoute.useSearch();
   const { data, isLoading } = useHomeProducts(pageNo, limit, category);
@@ -65,9 +69,13 @@ export const Container = () => {
   };
 
   // add to cart
-  const onClickAddToCart = () => {
+  const onClickAddToCart = (data: IProduct) => {
     if (!isAuthenticated) {
       toast.error("Please Sign In First");
+    } else {
+      const updatedItems = addCartItem(items, data);
+      updateCartItem(updatedItems);
+      onExpend();
     }
   };
 
