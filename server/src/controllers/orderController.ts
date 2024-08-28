@@ -1,10 +1,11 @@
+import { RequestHandler } from "express";
+import { isValidObjectId } from "mongoose";
+
 import { EUserRole } from "@/enum/user-role";
 import { IOrderItem } from "@/interfaces/IOrderItem";
 import { Order } from "@/models/order";
 import { OrderItem } from "@/models/orderitem";
 import { toJson } from "@/resources/responseResource";
-import { RequestHandler } from "express";
-import { isValidObjectId } from "mongoose";
 
 /**
  * Create an order
@@ -21,22 +22,24 @@ export const createOrder: RequestHandler = async (req, res) => {
     const isUser = role === EUserRole.USER;
     if (!isUser) return toJson(null, 401, "Unauthorized access!", res);
 
+    if (!req.body.items.length)
+      return toJson(null, 400, "Invalid Request", res);
     // looping an items array
     const items: IOrderItem[] = req.body.items;
-    const orderPromises = items.map((item) => {
-      const orderitem = new OrderItem({ ...item });
-      return orderitem.save();
+    const orderItemPromises = items.map((item) => {
+      const data = new OrderItem({ ...item });
+      return data.save();
     });
-    const orderResults = await Promise.all(orderPromises);
-    const orderItems = orderResults.map((result) => ({
-      item: result._id,
+    const orderResults = await Promise.all(orderItemPromises);
+    const orderItems = orderResults.map((res) => ({
+      item: res._id,
     }));
-
     const order = new Order({
       customer_id: id,
       items: orderItems,
       ...req.body,
     });
+    order.items = orderItems;
     await order.save();
 
     toJson(
@@ -93,15 +96,20 @@ export const updateOrder: RequestHandler = async (req, res) => {
  */
 export const getLatestOrderlist: RequestHandler = async (req, res) => {
   try {
-    console.log("hi");
     const { id } = req.user;
     const orders = await Order.find({ customer_id: id })
       .sort("-createdAt")
-      .populate("items.item");
+      .populate({
+        path: "items.item",
+        populate: {
+          path: "product",
+          model: "products",
+          select: ["image", "name"],
+        },
+      });
 
     toJson(orders, 200, null, res);
   } catch (e) {
-    console.log(e, "e");
     toJson(null, 500, "Server Error", res);
   }
 };

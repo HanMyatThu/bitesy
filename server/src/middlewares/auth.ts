@@ -25,7 +25,6 @@ export const isAuth: RequestHandler = async (req, res, next) => {
       avatar: user.avatar?.url,
       role: user.role,
     };
-
     next();
   } catch (error) {
     if (error instanceof TokenExpiredError) {

@@ -9,12 +9,12 @@ interface OrderDocument extends Document {
   date: IDateObject;
   status: EOrderStatus;
   price: number;
-  items: IOrderItem[];
+  items: { item: mongoose.Schema.Types.ObjectId }[];
   promotion: mongoose.Schema.Types.ObjectId | null;
   promotion_amount: number | 0;
 }
 
-const OrderSchema = new mongoose.Schema<OrderDocument>(
+const OrderSchema = new mongoose.Schema<OrderDocument, {}, null>(
   {
     customer_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -50,7 +50,9 @@ const OrderSchema = new mongoose.Schema<OrderDocument>(
         item: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "order-items",
+          required: true,
         },
+        _id: false,
       },
     ],
     status: {

@@ -8,7 +8,7 @@ interface TierDocument extends Document {
   user: mongoose.Schema.Types.ObjectId;
 }
 
-const TierSchema = new mongoose.Schema<TierDocument>({
+const TierSchema = new mongoose.Schema<TierDocument, {}, null>({
   type: {
     type: String,
     enum: ETier,

@@ -6,7 +6,7 @@ interface PromotionDocument extends Document {
   amount: number;
 }
 
-const PromotionSchema = new mongoose.Schema<PromotionDocument>({
+const PromotionSchema = new mongoose.Schema<PromotionDocument, {}, null>({
   name: {
     type: String,
     required: true,

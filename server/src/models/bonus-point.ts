@@ -1,6 +1,11 @@
 import mongoose, { Document } from "mongoose";
 
-const BonusPointSchema = new mongoose.Schema({
+interface BonusPointDocument extends Document {
+  bonus_point: number;
+  user: mongoose.Schema.Types.ObjectId;
+}
+
+const BonusPointSchema = new mongoose.Schema<BonusPointDocument, {}, null>({
   bonus_point: {
     type: Number,
     min: 0,

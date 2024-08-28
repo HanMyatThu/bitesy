@@ -7,13 +7,15 @@ import {
 } from "@/controllers/orderController";
 import { validate } from "@/middlewares/validator";
 import { isAuth } from "@/middlewares/auth";
-import { createOrderSchema } from "@/validationSchemas/orderSchema";
+import {
+  createOrderSchema,
+  updateOrderSchema,
+} from "@/validationSchemas/orderSchema";
 
 const orderRouter: Router = express.Router();
 
-orderRouter.post("/", isAuth, validate(createOrderSchema), createOrder);
 orderRouter.get("/listing", isAuth, getLatestOrderlist);
-
-orderRouter.patch("/update/status", isAuth, updateOrder);
+orderRouter.post("/", isAuth, validate(createOrderSchema), createOrder);
+orderRouter.patch("/:id", validate(updateOrderSchema), isAuth, updateOrder);
 
 export default orderRouter;

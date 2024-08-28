@@ -11,7 +11,11 @@ interface PromotionTypeDocument extends Document {
   day: number | null;
 }
 
-const PromotionTypeSchema = new mongoose.Schema<PromotionTypeDocument>({
+const PromotionTypeSchema = new mongoose.Schema<
+  PromotionTypeDocument,
+  {},
+  null
+>({
   type: {
     type: String,
     required: true,

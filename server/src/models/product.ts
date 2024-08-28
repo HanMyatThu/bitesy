@@ -11,7 +11,7 @@ export interface ProductDocument extends mongoose.Document {
   description: string;
 }
 
-const ProductSchema = new mongoose.Schema<ProductDocument>(
+const ProductSchema = new mongoose.Schema<ProductDocument, {}, null>(
   {
     name: {
       type: String,
