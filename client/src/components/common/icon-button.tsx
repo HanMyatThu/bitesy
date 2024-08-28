@@ -19,15 +19,15 @@ export const IconButton = ({
   info,
 }: IconButtonProps) => {
   return (
-    <Button
-      onClick={onClick}
-      variant="ghost"
-      size="icon"
-      className="cursor-pointer text-muted-foreground hover:text-primary"
+    <Link
+      to={href}
+      className="relative flex flex-col items-center justify-center"
     >
-      <Link
-        to={href}
-        className="relative flex flex-col items-center justify-center"
+      <Button
+        onClick={onClick}
+        variant="ghost"
+        size="icon"
+        className="relative flex cursor-pointer flex-col items-center justify-center text-muted-foreground hover:text-primary"
       >
         {info! > 0 && (
           <div className="absolute -right-1 -top-1 flex size-3 items-center justify-center rounded-full bg-red-700 text-white ring-1 ring-red-600">
@@ -38,7 +38,7 @@ export const IconButton = ({
         {label && (
           <p className="text-xs font-light text-muted-foreground">{label}</p>
         )}
-      </Link>
-    </Button>
+      </Button>
+    </Link>
   );
 };

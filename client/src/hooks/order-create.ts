@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 
 import { api } from "@/services/api-client";
 import { IOrder } from "@/interfaces/IOrder";
-import { EOrderCategory } from "@/interfaces/IProduct";
 import { queryClient } from "@/services/query-client";
 import { AxiosError } from "axios";
 
@@ -17,7 +16,7 @@ interface IItem {
   product: string;
   price: string;
   quantity: number;
-  category: EOrderCategory;
+  category: string;
 }
 
 interface IOrderPayload {
@@ -29,7 +28,7 @@ interface IOrderPayload {
   };
   items: IItem[];
   promotion_amount: number;
-  promotion: string;
+  promotion: string | null;
 }
 
 export function useOrderCreate() {
