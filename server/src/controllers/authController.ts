@@ -7,6 +7,8 @@ import { toJson } from "@/resources/responseResource";
 import { authToken } from "@/models/authToken";
 import { SendEmail } from "@/utils/sendEmail";
 import { PasswordResetTokenModel } from "@/models/passwordResetToken";
+import { TierModal } from "@/models/tier";
+import { BonusPoint } from "@/models/bonus-point";
 // import { Session } from "@/models/session";
 
 /**
@@ -45,6 +47,18 @@ export const createNewUser: RequestHandler = async (req, res) => {
       "verification@bitesy.com",
       `<h1>Please click on <a href="${link}">this link</a> to verify your account</h1>`
     );
+
+    // create tier data
+    const tier = new TierModal({
+      user: user._id,
+    });
+    await tier.save();
+
+    // create bonus point
+    const bonus_point = new BonusPoint({
+      user: user._id,
+    });
+    await bonus_point.save();
 
     toJson(
       { message: "We have sent verification to your email. Please verify it." },
@@ -131,6 +145,9 @@ export const signIn: RequestHandler = async (req, res) => {
 
     await user.save();
 
+    const tier = await TierModal.findOne({ user: user._id });
+    const bonus_point = await BonusPoint.findOne({ user: user._id });
+
     // //create session data
     // const broswerInfo = req.headers?.["user-agent"];
     // const session = new Session({
@@ -151,6 +168,8 @@ export const signIn: RequestHandler = async (req, res) => {
           role: user.role,
           avatar: user.avatar,
           promotions: user.promotions,
+          tier: tier,
+          bonus_point: bonus_point,
         },
         tokens: {
           refresh: refreshToken,
@@ -355,6 +374,52 @@ export const resetPassword: RequestHandler = async (req, res) => {
       res
     );
   } catch (error) {
+    toJson(null, 500, "Server Error", res);
+  }
+};
+
+/**
+ * Get User Profile
+ * 1. check if user is authenticated
+ * 2. find user from database
+ * 3. find tier and bonus points prmotions from db
+ * 4. return the response back
+ */
+export const getProfile: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const user = await User.findById(id).populate({
+      path: "promotions",
+      populate: {
+        path: "config",
+        model: "promotion-types",
+      },
+    });
+    if (!user) return toJson(null, 404, "User Not Found", res);
+
+    const tier = await TierModal.findOne({ user: user._id });
+    const bonus_point = await BonusPoint.findOne({ user: user._id });
+
+    return toJson(
+      {
+        profile: {
+          id: user._id,
+          address: user.address,
+          email: user.email,
+          name: user.name,
+          verified: user.verified,
+          role: user.role,
+          avatar: user.avatar,
+          promotions: user.promotions,
+          tier: tier,
+          bonus_point: bonus_point,
+        },
+      },
+      200,
+      null,
+      res
+    );
+  } catch {
     toJson(null, 500, "Server Error", res);
   }
 };

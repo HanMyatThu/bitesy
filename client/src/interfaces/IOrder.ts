@@ -16,6 +16,8 @@ export interface IOrder {
       item: OrderItem;
     },
   ];
+  status: string;
+  createdAt: Date;
 }
 
 type OrderItemProduct = {

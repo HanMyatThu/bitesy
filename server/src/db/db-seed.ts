@@ -1,9 +1,13 @@
+import { RequestHandler } from "express";
+
 import { EPromotionType } from "@/enum/promotion-type";
 import {
+  BONUS_POINT_MULTIPLER,
   CONSTANT_DAY,
   ITEM_CATEGORY,
   ORDER_MIN_QUANTITY,
   ORDER_MIN_TOTAL_PRICE,
+  TIER_POINT_MULTIPLER,
 } from "@/constants/constants";
 import { PromotionType } from "@/models/promotion-type";
 import { Promotion } from "@/models/promotions";
@@ -16,7 +20,6 @@ import {
 } from "@/utils/common";
 import { OrderItem } from "@/models/orderitem";
 import { Order } from "@/models/order";
-import { RequestHandler } from "express";
 import { TierModal } from "@/models/tier";
 import { BonusPoint } from "@/models/bonus-point";
 
@@ -331,7 +334,6 @@ export const dbSeed: RequestHandler = async (req, res) => {
     [...Array(12)].map(async (_, i) => {
       const randomUser = getRandomValueForArray(userResults);
       const randomProducts = getRandomObjectsFromArray(productResults);
-      console.log(randomProducts, "randomProducts");
       const totalPrice = randomProducts.reduce((accumulator, product) => {
         return accumulator + product.price;
       }, 0);
@@ -364,6 +366,27 @@ export const dbSeed: RequestHandler = async (req, res) => {
         items: orderItemsId,
       });
       await order.save();
+
+      const tier = await TierModal.findOne({ user: randomUser._id });
+      if (tier) {
+        const tierPoint =
+          (order.price + order.promotion_amount) * TIER_POINT_MULTIPLER;
+        tier.point = parseFloat(
+          (tier.point + Number(tierPoint.toFixed(2))).toFixed(2)
+        );
+        await tier.save();
+      }
+
+      //update bonus points
+      const bonus = await BonusPoint.findOne({ user: randomUser._id });
+      if (bonus) {
+        const bonuspoint =
+          (order.price + order.promotion_amount) * BONUS_POINT_MULTIPLER;
+        bonus.bonus_point = parseFloat(
+          (bonus.bonus_point + Number(bonuspoint.toFixed(2))).toFixed(2)
+        );
+        await bonus.save();
+      }
     });
     console.log("Orders are created");
 

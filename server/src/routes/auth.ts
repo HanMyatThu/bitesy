@@ -6,10 +6,10 @@ import {
   refreshToken,
   resetPassword,
   signIn,
+  getProfile,
   verifyEmail,
 } from "src/controllers/authController";
 import {
-  getProfile,
   getPublicProfile,
   updateAvatar,
   updateProfile,

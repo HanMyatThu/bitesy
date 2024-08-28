@@ -5,7 +5,7 @@ interface BonusPointDocument extends Document {
   user: mongoose.Schema.Types.ObjectId;
 }
 
-const BonusPointSchema = new mongoose.Schema<BonusPointDocument, {}, null>({
+const BonusPointSchema = new mongoose.Schema<BonusPointDocument>({
   bonus_point: {
     type: Number,
     min: 0,

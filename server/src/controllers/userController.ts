@@ -23,20 +23,6 @@ declare global {
   }
 }
 
-/**
- * Get User Profile
- * 1. return the user profile
- */
-export const getProfile: RequestHandler = async (req, res) => {
-  try {
-    res.json({
-      profile: req.user,
-    });
-  } catch {
-    return toJson(null, 500, "Server Error", res);
-  }
-};
-
 export const updateProfile: RequestHandler = async (req, res) => {
   try {
     const { name } = req.body;

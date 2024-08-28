@@ -6,6 +6,12 @@ import { IOrderItem } from "@/interfaces/IOrderItem";
 import { Order } from "@/models/order";
 import { OrderItem } from "@/models/orderitem";
 import { toJson } from "@/resources/responseResource";
+import { TierModal } from "@/models/tier";
+import {
+  BONUS_POINT_MULTIPLER,
+  TIER_POINT_MULTIPLER,
+} from "@/constants/constants";
+import { BonusPoint } from "@/models/bonus-point";
 
 /**
  * Create an order
@@ -41,6 +47,29 @@ export const createOrder: RequestHandler = async (req, res) => {
     });
     order.items = orderItems;
     await order.save();
+
+    //create tier points
+    const tier = await TierModal.findOne({ user: id });
+    if (tier) {
+      const tierPoint =
+        (order.price + order.promotion_amount) * TIER_POINT_MULTIPLER;
+      tier.point = parseFloat(
+        (tier.point + Number(tierPoint.toFixed(2))).toFixed(2)
+      );
+      await tier.save();
+    }
+
+    //update bonus points
+    const bonus = await BonusPoint.findOne({ user: id });
+    if (bonus) {
+      const bonuspoint =
+        (order.price + order.promotion_amount) * BONUS_POINT_MULTIPLER;
+
+      bonus.bonus_point = parseFloat(
+        (bonus.bonus_point + Number(bonuspoint.toFixed(2))).toFixed(2)
+      );
+      await bonus.save();
+    }
 
     toJson(
       {
