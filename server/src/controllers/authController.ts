@@ -245,11 +245,15 @@ export const refreshToken: RequestHandler = async (req, res) => {
         return toJson(null, 401, "Unauthorized Request!", res);
       }
 
-      const newAccessToken = jwt.sign(payload, process.env.JWT_SECRET!, {
+      const newPayload = {
+        id: user._id,
+      };
+
+      const newAccessToken = jwt.sign(newPayload, process.env.JWT_SECRET!, {
         expiresIn: "15m",
       });
 
-      const newRefreshToken = jwt.sign(payload, process.env.JWT_SECRET!);
+      const newRefreshToken = jwt.sign(newPayload, process.env.JWT_SECRET!);
 
       user.tokens = user.tokens.filter((t) => t !== refreshToken);
       user.tokens.push(newRefreshToken);
@@ -419,6 +423,28 @@ export const getProfile: RequestHandler = async (req, res) => {
       null,
       res
     );
+  } catch {
+    toJson(null, 500, "Server Error", res);
+  }
+};
+
+/**
+ * Sign Out
+ * 1. check if user is authenticated
+ * 2. find user from databas
+ * 3. empty the tokens array for the user
+ * 4. return the response
+ */
+export const signOut: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const user = await User.findById(id);
+    if (!user) return toJson(null, 404, "User Not Found", res);
+
+    user.tokens = [];
+    await user.save();
+
+    toJson({ message: "User has logout successfully" }, 200, null, res);
   } catch {
     toJson(null, 500, "Server Error", res);
   }

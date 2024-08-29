@@ -1,0 +1,707 @@
+{
+	"info": {
+		"_postman_id": "e1852606-8ed3-42da-8030-6a01a8244aa0",
+		"name": "Bitesy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34577314"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Han\",\r\n    \"email\": \"apple@gmail.com\",\r\n    \"password\": \"Admin123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/auth/sign-up",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"sign-up"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Han\",\r\n    \"email\": \"hanmyatthu111@gmail.com\",\r\n    \"password\": \"Admin123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env}}/api/auth/sign-up",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"sign-up"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": {\r\n        \"message\": \"We have sent verification to your email. Please verify it.\"\r\n    },\r\n    \"error\": null\r\n}"
+						},
+						{
+							"name": "User Register  Fail (String Password)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Han\",\r\n    \"email\": \"hanmyatthu111@gmail.com\",\r\n    \"password\": \"12341234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env}}/api/auth/sign-up",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"sign-up"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": null,\r\n    \"error\": {\r\n        \"code\": 400,\r\n        \"message\": \"User with email is already registered\"\r\n    }\r\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test1@gmail.com\",\r\n    \"password\": \"Testuser123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/auth/sign-in",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"sign-in"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Login Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test1@gmail.com\",\r\n    \"password\": \"Testuser123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env}}/api/auth/sign-in",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"sign-in"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": {\r\n        \"profile\": {\r\n            \"id\": \"66cd99b3263b618fc9079ea7\",\r\n            \"address\": \"helmond\",\r\n            \"email\": \"test1@gmail.com\",\r\n            \"name\": \"Test 1\",\r\n            \"verified\": true,\r\n            \"role\": \"user\",\r\n            \"promotions\": [\r\n                {\r\n                    \"_id\": \"66cd99b3263b618fc9079e9f\",\r\n                    \"name\": \"Get Your Promotion on purchasing many items!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cd99b2263b618fc9079e97\",\r\n                        \"type\": \"order_min_quantity\",\r\n                        \"min_order_item_quantity\": 4,\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 2.99,\r\n                    \"__v\": 0\r\n                },\r\n                {\r\n                    \"_id\": \"66cd99b3263b618fc9079ea0\",\r\n                    \"name\": \"Get Discount on minimum order!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cd99b2263b618fc9079e98\",\r\n                        \"type\": \"order_min_total_price\",\r\n                        \"min_order_total_price_usd\": 20,\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 6,\r\n                    \"__v\": 0\r\n                },\r\n                {\r\n                    \"_id\": \"66cd99b3263b618fc9079ea1\",\r\n                    \"name\": \"Get Your Promotion on Specific Item!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cd99b2263b618fc9079e99\",\r\n                        \"type\": \"item_category\",\r\n                        \"item_category\": \"drink\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 0.5,\r\n                    \"__v\": 0\r\n                },\r\n                {\r\n                    \"_id\": \"66cd99b3263b618fc9079ea2\",\r\n                    \"name\": \"Get Your Promotion on a Special day!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cd99b2263b618fc9079e9a\",\r\n                        \"type\": \"order_day_of_purchase\",\r\n                        \"day\": 1,\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 3.99,\r\n                    \"__v\": 0\r\n                }\r\n            ]\r\n        },\r\n        \"tokens\": {\r\n            \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Q5OWIzMjYzYjYxOGZjOTA3OWVhNyIsImlhdCI6MTcyNDgzMTk3M30.HdXy4wrOE3lMA9cnBjudgdK1axqrnC17Jl6TbRouCKE\",\r\n            \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Q5OWIzMjYzYjYxOGZjOTA3OWVhNyIsImlhdCI6MTcyNDgzMTk3MywiZXhwIjoxNzI0ODMzNzczfQ.Bc-KxnXPxXd1XZ9kVehIboDH1JxFWPUe4FPTV__b8dA\"\r\n        }\r\n    },\r\n    \"error\": null\r\n}"
+						},
+						{
+							"name": "User Login Failed (Unverified)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"apple@gmail.com\",\r\n    \"password\": \"Admin123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env}}/api/auth/sign-in",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"sign-in"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": null,\r\n    \"error\": {\r\n        \"code\": 401,\r\n        \"message\": \"User's Email is not verified yet\"\r\n    }\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5ZWEwNWM3NjYwNzllZjRjOTg2MyIsImlhdCI6MTcyNDkyMzc4NywiZXhwIjoxNzI0OTI1NTg3fQ.yMM6o7MdZ4DhDY6zjWGfE9C4y9OdEAyhNXOUULHOxW8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{env}}/api/auth/profile",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{env}}/api/auth/profile",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"profile"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": {\r\n        \"profile\": {\r\n            \"id\": \"66cf95886ae7b45aa454baef\",\r\n            \"address\": \"helmond\",\r\n            \"email\": \"test1@gmail.com\",\r\n            \"name\": \"Test 1\",\r\n            \"verified\": true,\r\n            \"role\": \"user\",\r\n            \"promotions\": [\r\n                {\r\n                    \"_id\": \"66cf95886ae7b45aa454bae7\",\r\n                    \"name\": \"Get Your Promotion on purchasing many items!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cf95886ae7b45aa454badf\",\r\n                        \"type\": \"order_min_quantity\",\r\n                        \"min_order_item_quantity\": 4,\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 2.99,\r\n                    \"__v\": 0\r\n                },\r\n                {\r\n                    \"_id\": \"66cf95886ae7b45aa454bae8\",\r\n                    \"name\": \"Get Discount on minimum order!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cf95886ae7b45aa454bae0\",\r\n                        \"type\": \"order_min_total_price\",\r\n                        \"min_order_total_price_usd\": 20,\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 6,\r\n                    \"__v\": 0\r\n                },\r\n                {\r\n                    \"_id\": \"66cf95886ae7b45aa454bae9\",\r\n                    \"name\": \"Get Your Promotion on Specific Item!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cf95886ae7b45aa454bae1\",\r\n                        \"type\": \"item_category\",\r\n                        \"item_category\": \"drink\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 0.5,\r\n                    \"__v\": 0\r\n                },\r\n                {\r\n                    \"_id\": \"66cf95886ae7b45aa454baea\",\r\n                    \"name\": \"Get Your Promotion on a Special day!\",\r\n                    \"config\": {\r\n                        \"_id\": \"66cf95886ae7b45aa454bae2\",\r\n                        \"type\": \"order_day_of_purchase\",\r\n                        \"day\": 1,\r\n                        \"__v\": 0\r\n                    },\r\n                    \"amount\": 3.99,\r\n                    \"__v\": 0\r\n                }\r\n            ],\r\n            \"tier\": {\r\n                \"_id\": \"66cf95886ae7b45aa454baf5\",\r\n                \"type\": \"none\",\r\n                \"point\": 2.3600000000000003,\r\n                \"user\": \"66cf95886ae7b45aa454baef\",\r\n                \"__v\": 0\r\n            },\r\n            \"bonus_point\": {\r\n                \"_id\": \"66cf95886ae7b45aa454bafb\",\r\n                \"bonus_point\": 4.73,\r\n                \"user\": \"66cf95886ae7b45aa454baef\",\r\n                \"__v\": 0\r\n            }\r\n        }\r\n    },\r\n    \"error\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"123\",\r\n    \"token\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/auth/verify",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5ZWEwNWM3NjYwNzllZjRjOTg2MyIsImlhdCI6MTcyNDkyNDMzMSwiZXhwIjoxNzI0OTI2MTMxfQ.4vi0FZJDv0B3v3JyosWJza_mrVQ6vW3GG_tKT_ttRHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{env}}/api/auth/sign-out",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"sign-out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Access Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5ZWEwNWM3NjYwNzllZjRjOTg2MyIsImlhdCI6MTcyNDkyNDMzMSwiZXhwIjoxNzI0OTI2MTMxfQ.4vi0FZJDv0B3v3JyosWJza_mrVQ6vW3GG_tKT_ttRHs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5ZWEwNWM3NjYwNzllZjRjOTg2MyIsImlhdCI6MTcyNDkyNDc0MX0.35sLdyTtZfXs7X3C1CAw3cIdJDqnUbRyCvX0squRKlc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/auth/refresh-token",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5ZWEwNWM3NjYwNzllZjRjOTg2MyIsImlhdCI6MTcyNDkyNDc0MSwiZXhwIjoxNzI0OTI2NTQxfQ.rvpmNbHF5qH3hVjmA37ESMyoqmeVYJWEDeWnlfZh9Ig",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{env}}/api/auth/verify-token",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verify-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "db seed",
+			"item": [
+				{
+					"name": "Seed Database",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{env}}/api/db-seed",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"db-seed"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "API to seed the database with default data."
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "Get Latest Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5NzhkNmZjMmI2YzgxNDcwMTRiNSIsImlhdCI6MTcyNDg4MjA3MywiZXhwIjoxNzI0ODgzODczfQ.jjYdVM4j2vf1g12DNdWqI4qGAR0PJZJR54RNS46oPmQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{env}}/api/orders/listing",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"listing"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Latest Orders ( Unauthorized Issue)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{env}}/api/orders",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": null,\r\n    \"error\": {\r\n        \"code\": 401,\r\n        \"message\": \"Unauthorized Error\"\r\n    }\r\n}"
+						},
+						{
+							"name": "Get Latest Orders",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{env}}/api/orders/listing",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"listing"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": [\r\n        {\r\n            \"_id\": \"66cd99b4263b618fc9079f23\",\r\n            \"customer_id\": \"66cd99b3263b618fc9079ea7\",\r\n            \"date\": {\r\n                \"year\": 2024,\r\n                \"month\": 5,\r\n                \"date\": 7\r\n            },\r\n            \"price\": 12.49,\r\n            \"promotion_amount\": 0,\r\n            \"items\": [\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ed8\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b3263b618fc9079eb9\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746510/p-1_fphco6.jpg\",\r\n                                \"id\": \"p-1_fphco6\"\r\n                            }\r\n                        },\r\n                        \"price\": 12.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b4263b618fc9079f24\"\r\n                }\r\n            ],\r\n            \"status\": \"payment_processing\",\r\n            \"promotions\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"66cd99b4263b618fc9079f26\",\r\n            \"customer_id\": \"66cd99b3263b618fc9079ea7\",\r\n            \"date\": {\r\n                \"year\": 2024,\r\n                \"month\": 8,\r\n                \"date\": 8\r\n            },\r\n            \"price\": 12.49,\r\n            \"promotion_amount\": 0,\r\n            \"items\": [\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ed9\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b3263b618fc9079eb9\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746510/p-1_fphco6.jpg\",\r\n                                \"id\": \"p-1_fphco6\"\r\n                            }\r\n                        },\r\n                        \"price\": 12.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b4263b618fc9079f27\"\r\n                }\r\n            ],\r\n            \"status\": \"payment_processing\",\r\n            \"promotions\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"66cd99b4263b618fc9079f2c\",\r\n            \"customer_id\": \"66cd99b3263b618fc9079ea7\",\r\n            \"date\": {\r\n                \"year\": 2024,\r\n                \"month\": 0,\r\n                \"date\": 20\r\n            },\r\n            \"price\": 12.49,\r\n            \"promotion_amount\": 0,\r\n            \"items\": [\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079eec\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b3263b618fc9079eb9\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746510/p-1_fphco6.jpg\",\r\n                                \"id\": \"p-1_fphco6\"\r\n                            }\r\n                        },\r\n                        \"price\": 12.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b4263b618fc9079f2d\"\r\n                }\r\n            ],\r\n            \"status\": \"payment_processing\",\r\n            \"promotions\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"66cd99b5263b618fc9079f40\",\r\n            \"customer_id\": \"66cd99b3263b618fc9079ea7\",\r\n            \"date\": {\r\n                \"year\": 2024,\r\n                \"month\": 5,\r\n                \"date\": 24\r\n            },\r\n            \"price\": 12.49,\r\n            \"promotion_amount\": 0,\r\n            \"items\": [\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079efc\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b3263b618fc9079eb9\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746510/p-1_fphco6.jpg\",\r\n                                \"id\": \"p-1_fphco6\"\r\n                            }\r\n                        },\r\n                        \"price\": 12.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b5263b618fc9079f41\"\r\n                }\r\n            ],\r\n            \"status\": \"payment_processing\",\r\n            \"promotions\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"66cd99b6263b618fc9079f54\",\r\n            \"customer_id\": \"66cd99b3263b618fc9079ea7\",\r\n            \"date\": {\r\n                \"year\": 2024,\r\n                \"month\": 4,\r\n                \"date\": 7\r\n            },\r\n            \"price\": 52.89,\r\n            \"promotion_amount\": 0,\r\n            \"items\": [\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079eed\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b3263b618fc9079eba\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746748/p-2_lokhpx.jpg\",\r\n                                \"id\": \"p-2_lokhpx\"\r\n                            }\r\n                        },\r\n                        \"price\": 15.99,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f55\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079eee\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ebb\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746814/p-3_wc6j0w.jpg\",\r\n                                \"id\": \"p-3_wc6j0w\"\r\n                            }\r\n                        },\r\n                        \"price\": 8.79,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f56\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079eef\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ebc\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746939/p-4_csf8lw.jpg\",\r\n                                \"id\": \"p-4_csf8lw\"\r\n                            }\r\n                        },\r\n                        \"price\": 9.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"meal\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f57\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef0\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ebd\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747010/p-5_mw6gek.jpg\",\r\n                                \"id\": \"p-5_mw6gek\"\r\n                            }\r\n                        },\r\n                        \"price\": 1.99,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"drink\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f58\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef1\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ebe\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747087/p-6_ldwjwv.jpg\",\r\n                                \"id\": \"p-6_ldwjwv\"\r\n                            }\r\n                        },\r\n                        \"price\": 2.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"drink\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f59\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef2\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ebf\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747130/pexels-texasgal51-792613_xnsdfn.jpg\",\r\n                                \"id\": \"pexels-texasgal51-792613_xnsdfn\"\r\n                            }\r\n                        },\r\n                        \"price\": 2.99,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"drink\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f5a\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef3\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ec0\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747183/p-9_cibvnx.jpg\",\r\n                                \"id\": \"p-9_cibvnx\"\r\n                            }\r\n                        },\r\n                        \"price\": 3.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"drink\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f5b\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef4\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ec1\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747277/pexels-solodsha-8105111_zz3av8.jpg\",\r\n                                \"id\": \"pexels-solodsha-8105111_zz3av8\"\r\n                            }\r\n                        },\r\n                        \"price\": 1.49,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"candy\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f5c\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef5\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ec2\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747331/pexels-polina-tankilevitch-5469042_zlmrma.jpg\",\r\n                                \"id\": \"pexels-polina-tankilevitch-5469042_zlmrma\"\r\n                            }\r\n                        },\r\n                        \"price\": 2.19,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"candy\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f5d\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef6\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ec3\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747388/pexels-stasknop-1280730_e2aczr.jpg\",\r\n                                \"id\": \"pexels-stasknop-1280730_e2aczr\"\r\n                            }\r\n                        },\r\n                        \"price\": 0.99,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"candy\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f5e\"\r\n                },\r\n                {\r\n                    \"item\": {\r\n                        \"_id\": \"66cd99b4263b618fc9079ef7\",\r\n                        \"product\": {\r\n                            \"_id\": \"66cd99b4263b618fc9079ec4\",\r\n                            \"image\": {\r\n                                \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747480/pexels-introspectivedsgn-4061441_u40dog.jpg\",\r\n                                \"id\": \"pexels-stasknop-1280730_e2aczr\"\r\n                            }\r\n                        },\r\n                        \"price\": 2.99,\r\n                        \"quantity\": 1,\r\n                        \"category\": \"convenience\",\r\n                        \"__v\": 0\r\n                    },\r\n                    \"_id\": \"66cd99b6263b618fc9079f5f\"\r\n                }\r\n            ],\r\n            \"status\": \"payment_processing\",\r\n            \"promotions\": [],\r\n            \"__v\": 0\r\n        }\r\n    ],\r\n    \"error\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y5NzhkNmZjMmI2YzgxNDcwMTRiNSIsImlhdCI6MTcyNDg4MDc4NywiZXhwIjoxNzI0ODgyNTg3fQ.BlhHa9X3EF7JKIXeQ3lUG-VmIaCp7vgktsYn0ukYpp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": \"29.99\",\r\n    \"date\": {\r\n        \"year\": 2024,\r\n        \"month\": 8,\r\n        \"date\": 2\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"product\": \"66cd99b4263b618fc9079ec3\",\r\n            \"price\": \" 0.99\",\r\n            \"quantity\": 3,\r\n            \"category\": \"candy\"\r\n        },\r\n        {\r\n            \"product\": \"66cd99b4263b618fc9079ec5\",\r\n            \"price\": \"3.29\",\r\n            \"quantity\": 1,\r\n            \"category\": \"convenience\"\r\n        },\r\n        {\r\n            \"product\": \"66cd99b4263b618fc9079ebc\",\r\n            \"price\": \"9.49\",\r\n            \"quantity\": 1,\r\n            \"category\": \"meal\"\r\n        }\r\n    ],\r\n    \"promotion_amount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/orders",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"price\": \"29.99\",\r\n    \"date\": {\r\n        \"year\": 2024,\r\n        \"month\": 8,\r\n        \"date\": 2\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"product\": \"66cd99b4263b618fc9079ec3\",\r\n            \"price\": \" 0.99\",\r\n            \"quantity\": 3,\r\n            \"category\": \"candy\"\r\n        },\r\n        {\r\n            \"product\": \"66cd99b4263b618fc9079ec5\",\r\n            \"price\": \"3.29\",\r\n            \"quantity\": 1,\r\n            \"category\": \"convenience\"\r\n        },\r\n        {\r\n            \"product\": \"66cd99b4263b618fc9079ebc\",\r\n            \"price\": \"9.49\",\r\n            \"quantity\": 1,\r\n            \"category\": \"meal\"\r\n        }\r\n    ],\r\n    \"promotion_amount\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env}}/api/orders",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": {\r\n        \"order\": {\r\n            \"customer_id\": \"66cf87a89128de17293c066e\",\r\n            \"date\": {\r\n                \"year\": 2024,\r\n                \"month\": 8,\r\n                \"date\": 2\r\n            },\r\n            \"price\": 29.99,\r\n            \"promotion_amount\": 0,\r\n            \"items\": [\r\n                {\r\n                    \"item\": \"66cf8dcbbb07d2bb37440c71\"\r\n                },\r\n                {\r\n                    \"item\": \"66cf8dcbbb07d2bb37440c72\"\r\n                },\r\n                {\r\n                    \"item\": \"66cf8dcbbb07d2bb37440c73\"\r\n                }\r\n            ],\r\n            \"status\": \"payment_processing\",\r\n            \"_id\": \"66cf8dcbbb07d2bb37440c77\",\r\n            \"createdAt\": \"2024-08-28T20:51:23.336Z\",\r\n            \"updatedAt\": \"2024-08-28T20:51:23.336Z\",\r\n            \"__v\": 0\r\n        }\r\n    },\r\n    \"error\": null\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Order Status (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2Y4N2E4OTEyOGRlMTcyOTNjMDY2ZSIsImlhdCI6MTcyNDg3NjcxOSwiZXhwIjoxNzI0ODc4NTE5fQ.1Tipr7_EtyVwmVvaCU6jwU2SpnGaDGb9N6rFrld_XN0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"order_complete\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/orders/66cf8dcbbb07d2bb37440c77",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"66cf8dcbbb07d2bb37440c77"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Order Status (Admin Only)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\": \"order_complete\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env}}/api/orders/66cf8dcbbb07d2bb37440c77",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"66cf8dcbbb07d2bb37440c77"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": null,\r\n    \"error\": {\r\n        \"code\": 401,\r\n        \"message\": \"Unauthorized access!\"\r\n    }\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{env}}/api/products/latest",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"latest"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all products (default)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{env}}/api/products/latest",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"latest"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": {\r\n        \"products\": [\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec1\",\r\n                \"name\": \"Chocolate Bar\",\r\n                \"description\": \"Milk chocolate bar with a creamy center\",\r\n                \"price\": 1.49,\r\n                \"category\": \"candy\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747277/pexels-solodsha-8105111_zz3av8.jpg\",\r\n                    \"id\": \"pexels-solodsha-8105111_zz3av8\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec2\",\r\n                \"name\": \"Gummy Bears\",\r\n                \"description\": \"Colorful gummy bears with fruity flavors\",\r\n                \"price\": 2.19,\r\n                \"category\": \"candy\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747331/pexels-polina-tankilevitch-5469042_zlmrma.jpg\",\r\n                    \"id\": \"pexels-polina-tankilevitch-5469042_zlmrma\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec3\",\r\n                \"name\": \"Lollipop\",\r\n                \"description\": \"Large swirl lollipop with mixed fruit flavors\",\r\n                \"price\": 0.99,\r\n                \"category\": \"candy\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747388/pexels-stasknop-1280730_e2aczr.jpg\",\r\n                    \"id\": \"pexels-stasknop-1280730_e2aczr\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec4\",\r\n                \"name\": \"Pack of Chips\",\r\n                \"description\": \"Crispy potato chips with sea salt\",\r\n                \"price\": 2.99,\r\n                \"category\": \"convenience\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747480/pexels-introspectivedsgn-4061441_u40dog.jpg\",\r\n                    \"id\": \"pexels-stasknop-1280730_e2aczr\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec5\",\r\n                \"name\": \"Protein Bar\",\r\n                \"description\": \"High-protein bar with chocolate and nuts\",\r\n                \"price\": 3.29,\r\n                \"category\": \"convenience\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747535/pexels-fox-1004-58267-17763560_x5zniy.jpg\",\r\n                    \"id\": \"pexels-fox-1004-58267-17763560_x5zniy\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec6\",\r\n                \"name\": \"Instant Noodles\",\r\n                \"description\": \"Instant ramen noodles with beef flavor\",\r\n                \"price\": 1.89,\r\n                \"category\": \"convenience\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747649/pexels-alena-shekhovtcova-6940987_1_zmhm6c.jpg\",\r\n                    \"id\": \"pexels-alena-shekhovtcova-6940987_1_zmhm6c\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec7\",\r\n                \"name\": \"Reusable Water Bottle\",\r\n                \"description\": \"Eco-friendly reusable water bottle\",\r\n                \"price\": 9.99,\r\n                \"category\": \"other\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747742/pexels-jibarofoto-4000090_vhfcjk.jpg\",\r\n                    \"id\": \"pexels-jibarofoto-4000090_vhfcjk\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.008Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b3263b618fc9079eb9\",\r\n                \"name\": \"Pepperoni Pizza\",\r\n                \"description\": \"Pepperoni Pizza with extra cheese\",\r\n                \"price\": 12.49,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746510/p-1_fphco6.jpg\",\r\n                    \"id\": \"p-1_fphco6\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b3263b618fc9079eba\",\r\n                \"name\": \"Spaghetti Bolognese\",\r\n                \"description\": \"Classic Italian spaghetti with Bolognese sauce\",\r\n                \"price\": 15.99,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746748/p-2_lokhpx.jpg\",\r\n                    \"id\": \"p-2_lokhpx\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebc\",\r\n                \"name\": \"Vegetable Stir Fry\",\r\n                \"description\": \"Fresh vegetables stir-fried with soy sauce\",\r\n                \"price\": 9.49,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746939/p-4_csf8lw.jpg\",\r\n                    \"id\": \"p-4_csf8lw\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebd\",\r\n                \"name\": \"Cola\",\r\n                \"description\": \"Refreshing cola drink\",\r\n                \"price\": 1.99,\r\n                \"category\": \"drink\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747010/p-5_mw6gek.jpg\",\r\n                    \"id\": \"p-5_mw6gek\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebb\",\r\n                \"name\": \"Grilled Chicken Sandwich\",\r\n                \"description\": \"Grilled chicken sandwich with lettuce and tomato\",\r\n                \"price\": 8.79,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746814/p-3_wc6j0w.jpg\",\r\n                    \"id\": \"p-3_wc6j0w\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ec0\",\r\n                \"name\": \"Espresso\",\r\n                \"description\": \"Strong and rich espresso shot\",\r\n                \"price\": 3.49,\r\n                \"category\": \"drink\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747183/p-9_cibvnx.jpg\",\r\n                    \"id\": \"p-9_cibvnx\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebe\",\r\n                \"name\": \"Orange Juice\",\r\n                \"description\": \"Freshly squeezed orange juice\",\r\n                \"price\": 2.49,\r\n                \"category\": \"drink\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747087/p-6_ldwjwv.jpg\",\r\n                    \"id\": \"p-6_ldwjwv\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebf\",\r\n                \"name\": \"Lemon Iced Tea\",\r\n                \"description\": \"Chilled lemon-flavored iced tea\",\r\n                \"price\": 2.99,\r\n                \"category\": \"drink\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724747130/pexels-texasgal51-792613_xnsdfn.jpg\",\r\n                    \"id\": \"pexels-texasgal51-792613_xnsdfn\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            }\r\n        ],\r\n        \"pagination\": {\r\n            \"totalPage\": null\r\n        }\r\n    },\r\n    \"error\": null\r\n}"
+						},
+						{
+							"name": "get all products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{env}}/api/products/latest?pageNo=1&limit=5&category=meal",
+									"host": [
+										"{{env}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"latest"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										},
+										{
+											"key": "category",
+											"value": "meal"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"data\": {\r\n        \"products\": [\r\n            {\r\n                \"_id\": \"66cd99b3263b618fc9079eb9\",\r\n                \"name\": \"Pepperoni Pizza\",\r\n                \"description\": \"Pepperoni Pizza with extra cheese\",\r\n                \"price\": 12.49,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746510/p-1_fphco6.jpg\",\r\n                    \"id\": \"p-1_fphco6\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b3263b618fc9079eba\",\r\n                \"name\": \"Spaghetti Bolognese\",\r\n                \"description\": \"Classic Italian spaghetti with Bolognese sauce\",\r\n                \"price\": 15.99,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746748/p-2_lokhpx.jpg\",\r\n                    \"id\": \"p-2_lokhpx\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebc\",\r\n                \"name\": \"Vegetable Stir Fry\",\r\n                \"description\": \"Fresh vegetables stir-fried with soy sauce\",\r\n                \"price\": 9.49,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746939/p-4_csf8lw.jpg\",\r\n                    \"id\": \"p-4_csf8lw\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            },\r\n            {\r\n                \"_id\": \"66cd99b4263b618fc9079ebb\",\r\n                \"name\": \"Grilled Chicken Sandwich\",\r\n                \"description\": \"Grilled chicken sandwich with lettuce and tomato\",\r\n                \"price\": 8.79,\r\n                \"category\": \"meal\",\r\n                \"image\": {\r\n                    \"url\": \"https://res.cloudinary.com/dslvabuvq/image/upload/v1724746814/p-3_wc6j0w.jpg\",\r\n                    \"id\": \"p-3_wc6j0w\"\r\n                },\r\n                \"createdAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"updatedAt\": \"2024-08-27T09:17:40.007Z\",\r\n                \"__v\": 0\r\n            }\r\n        ],\r\n        \"pagination\": {\r\n            \"currentPage\": \"1\",\r\n            \"limit\": \"5\",\r\n            \"totalPage\": 1\r\n        }\r\n    },\r\n    \"error\": null\r\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

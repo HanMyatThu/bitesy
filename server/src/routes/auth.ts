@@ -8,6 +8,7 @@ import {
   signIn,
   getProfile,
   verifyEmail,
+  signOut,
 } from "src/controllers/authController";
 import {
   getPublicProfile,
@@ -40,7 +41,7 @@ authRouter.post(
 );
 
 authRouter.post("/sign-in", signIn);
-authRouter.post("/sign-out", isAuth);
+authRouter.post("/sign-out", isAuth, signOut);
 
 authRouter.get("/profile", isAuth, getProfile);
 authRouter.get("/profile/:id", isAuth, getPublicProfile);

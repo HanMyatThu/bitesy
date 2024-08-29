@@ -84,3 +84,4 @@ shadcn is a collection of re-usable components builted using Radix UI and Tailwi
 
 Using shadcn/ui, instead of install the component in the project, you use `npm add <...>` command to copy the component to your component folder, giving you lots of possibilities, including the fully customization control. All of the components are under the
 `components/ui` folder. 
+
