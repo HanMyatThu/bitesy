@@ -76,3 +76,23 @@ export function useUserRegister() {
       queryClient.invalidateQueries({ queryKey: ["user-signup"] }),
   });
 }
+
+export function useUserLogout() {
+  async function fetchUserLogout() {
+    const { data } =
+      await api.post<IUserRegisterResponse>(`/api/auth/sign-out`);
+    sessionStorage.removeItem("accesstoken");
+    sessionStorage.removeItem("refreshtoken");
+    return data.data;
+  }
+
+  return useMutation({
+    mutationFn: fetchUserLogout,
+    onError: (e) => {
+      const error = e as AxiosError<IUserRegisterResponse>;
+      throw new Error(error.response?.data.error?.message);
+    },
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["user-sign-out"] }),
+  });
+}

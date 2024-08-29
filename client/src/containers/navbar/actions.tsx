@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   ExternalLinkIcon,
   LogIn,
@@ -7,6 +8,7 @@ import {
 import { useMediaQuery } from "usehooks-ts";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "@tanstack/react-router";
 
 import { ToggleTheme } from "@/components/darktheme/toggle-theme";
 import { IconButton } from "@/components/common/icon-button";
@@ -17,19 +19,42 @@ import { useUser } from "@/contexts/user";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/use-cart";
+import { useUserLogout } from "@/hooks/user";
+import { IUser } from "@/interfaces/IUser";
 
 export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, setUser } = useUser();
+  const { mutateAsync, reset, data, isSuccess, isPending } = useUserLogout();
   const { onExpend, items } = useCartStore((state) => state);
+
+  useEffect(() => {
+    if (data && isSuccess) {
+      toast.success(data.message);
+      reset();
+      setUser({} as IUser);
+      navigate({
+        to: "/sign-in",
+      });
+    }
+  }, [data, isSuccess, reset, setUser, navigate]);
 
   const handleOpenCart = () => {
     if (!isAuthenticated) {
       toast.error("Please Sign In First");
     } else {
       onExpend();
+    }
+  };
+
+  const handleSignOut = async () => {
+    if (isAuthenticated) {
+      await mutateAsync();
+    } else {
+      toast.error("Please Sign In First");
     }
   };
 
@@ -73,6 +98,8 @@ export const Actions = () => {
               size="default"
               variant="ghost"
               className="flex flex-row gap-x-1"
+              disabled={isPending}
+              onClick={handleSignOut}
             >
               <ExternalLinkIcon className="size-3" />
               <p className="text-sm text-primary">{t("SIGN_OUT")}</p>
