@@ -18,6 +18,7 @@ export const PastOrder = ({ data }: PastOrderProps) => {
           items={order.items}
           purchaseDate={order.date}
           price={order.price}
+          status={order.status}
           promotion_amount={order.promotion_amount}
         />
       ))}

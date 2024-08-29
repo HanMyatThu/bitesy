@@ -12,6 +12,7 @@ export const PastItems = ({ data }: PastItemsProps) => {
           key={order._id}
           imageUrl={order.items[0].item.product.image.url}
           items={order.items}
+          totalPrice={order.price}
         />
       ))}
     </div>

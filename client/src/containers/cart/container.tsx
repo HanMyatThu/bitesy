@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { ShoppingBag, Trash, X } from "lucide-react";
+import { Loader2, ShoppingBag, Trash, X } from "lucide-react";
 
 import {
   Drawer,
@@ -90,9 +90,16 @@ export const Container = () => {
       toast.error("Unknow Error Occured");
     }
   };
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      onCollapsed();
+    }
+  };
+
   return (
-    <Drawer open={collapsed} direction="right">
-      <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen rounded-none sm:w-[370px] md:w-[480px]">
+    <Drawer open={collapsed} direction="right" onOpenChange={handleOpenChange}>
+      <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen rounded-none sm:w-[380px] md:w-[480px]">
         <DrawerHeader>
           <DrawerTitle className="flex flex-row gap-x-2 font-sans font-semibold">
             Check Out <ShoppingBag className="size-4" />
@@ -161,10 +168,10 @@ export const Container = () => {
             onClick={handleCheckout}
             variant="default"
             disabled={!items.length || isPending}
-            className="text-blue-900"
+            className="text-blue-300 dark:text-blue-900"
           >
             Checkout {`$ ${priceInfo?.totalPrice}`}
-            {/* {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />} */}
+            {isPending && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
           </Button>
         </DrawerFooter>
       </DrawerContent>

@@ -18,6 +18,7 @@
 /client/dist-ssr
 /client/*.local
 /client/.env
+/client/.env.prod
 
 # Editor directories and files
 /client/.vscode/*

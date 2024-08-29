@@ -74,3 +74,26 @@ export const getDateValue = (year: number, month: number, day: number) => {
   const date = new Date(year, month, day);
   return date.toLocaleDateString();
 };
+
+export const getColors = (): string[] => {
+  const colors = [
+    "bg-cyan-600",
+    "bg-green-600",
+    "bg-orange-800",
+    "bg-amber-400",
+    "bg-yellow-600",
+  ];
+
+  return colors;
+};
+
+export const getImages = (): string[] => {
+  const images = [
+    "/images/promo1.png",
+    "/images/promo2.png",
+    "/images/promo3.png",
+    "/images/promo4.png",
+    "/images/promo5.png",
+  ];
+  return images;
+};

@@ -13,7 +13,7 @@ export const getTotalPrice = (
       return accumulator + price * item.quantity;
     }, 0);
     return {
-      totalPrice: totalPrice,
+      totalPrice: parseFloat(totalPrice.toFixed(2)),
       promotion_amount: 0,
     };
   } else {

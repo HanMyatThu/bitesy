@@ -16,6 +16,7 @@ interface PastOrderResultProps {
   };
   price: number;
   promotion_amount: number;
+  status: string;
 }
 
 export const PastOrderResult = ({
@@ -24,6 +25,7 @@ export const PastOrderResult = ({
   purchaseDate,
   price,
   promotion_amount,
+  status,
 }: PastOrderResultProps) => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const { year, month, date } = purchaseDate;
@@ -48,7 +50,8 @@ export const PastOrderResult = ({
             </span>
           </p>
           <p className="text-xs text-muted-foreground md:text-sm xl:text-xl">
-            {getDateValue(+year, +month, +date)} . Completed
+            {getDateValue(+year, +month, +date)} .{" "}
+            {status.replace("_", "").toUpperCase()}
           </p>
         </div>
       </div>

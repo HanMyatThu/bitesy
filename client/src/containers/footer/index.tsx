@@ -30,7 +30,7 @@ const footerMenu: FooterMenuProps[] = [
     id: 3,
     icon: NotepadText,
     label: "Orders",
-    href: "/",
+    href: "/orders",
   },
   {
     id: 4,

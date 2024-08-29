@@ -37,7 +37,7 @@ export const createOrderSchema = yup.object({
     .of(orderItemSchema)
     .required("item is required")
     .min(1, "Items Array shouldn't be empty to create a order"),
-  promotion: yup.string().optional(),
+  promotion: yup.string().optional().nullable(),
   promotion_amount: yup.number().optional(),
 });
 

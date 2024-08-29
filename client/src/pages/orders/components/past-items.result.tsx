@@ -10,9 +10,14 @@ import { OrderItem } from "@/interfaces/IOrder";
 interface PastItemResultProps {
   imageUrl: string;
   items: [{ item: OrderItem }];
+  totalPrice: number;
 }
 
-export const PastItemsResult = ({ imageUrl, items }: PastItemResultProps) => {
+export const PastItemsResult = ({
+  imageUrl,
+  items,
+  totalPrice,
+}: PastItemResultProps) => {
   const isMobile = useMediaQuery("(max-width: 600px)");
   const orderNames = items.map((i) => i.item.product.name);
   const uniqueNames = [...new Set(orderNames)];
@@ -29,7 +34,7 @@ export const PastItemsResult = ({ imageUrl, items }: PastItemResultProps) => {
               {orderName}
             </h5>
             <p className="text-xs text-muted-foreground md:text-sm xl:text-xl">
-              Add Items to Cart
+              totalPrice - ${totalPrice}
             </p>
           </div>
         </div>

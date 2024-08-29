@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { ElementRef, useRef } from "react";
 
 import { CategoryIcon, CategoryIconSeketon } from "../components/category_icon";
 import { Separator } from "@/components/ui/separator";
@@ -21,7 +22,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/contexts/user";
 import { IProduct } from "@/interfaces/IProduct";
 import { useCartStore } from "@/store/use-cart";
-import { addCartItem } from "@/lib/common";
+import { addCartItem, getColors, getImages } from "@/lib/common";
+import { PromotionItem } from "../components/promotion-item";
 
 const categoryData = [
   { id: 1, title: "Meal", icon: Utensils, value: "meal" },
@@ -32,12 +34,16 @@ const categoryData = [
 ];
 
 export const Container = () => {
-  const { isAuthenticated } = useUser();
+  const scrollRef = useRef<ElementRef<"div">>(null);
+  const { user, isAuthenticated } = useUser();
   const { items, updateCartItem, onExpend } = useCartStore((state) => state);
   const navigate = useNavigate();
   const { pageNo = "1", category = "", limit = "8" } = homeRoute.useSearch();
   const { data, isLoading } = useHomeProducts(pageNo, limit, category);
   const products = data?.products || [];
+
+  const colors = getColors();
+  const images = getImages();
 
   const currentPage = data?.pagination.currentPage;
 
@@ -114,7 +120,23 @@ export const Container = () => {
         ))}
       </div>
       <Separator className="mt-8" />
-      <div className="py-4">
+      {isAuthenticated && user.promotions.length && (
+        <div className="mt-3 grid grid-cols-1 gap-5 py-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+          {user.promotions.map((promotion, i) => (
+            <PromotionItem
+              key={i}
+              label={promotion.name}
+              image={images[i]}
+              amount={promotion.amount}
+              onCLick={() =>
+                scrollRef.current?.scrollIntoView({ behavior: "smooth" })
+              }
+              className={`${colors[i]}`}
+            />
+          ))}
+        </div>
+      )}
+      <div ref={scrollRef} className="py-4">
         <h2 className="mb-4 text-lg font-semibold">All Products</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
           {products.map((product) => (
