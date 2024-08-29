@@ -1,10 +1,11 @@
-import { Link } from "@tanstack/react-router";
 import { useMediaQuery } from "usehooks-ts";
+import { useTranslation } from "react-i18next";
 
 import { AvatarItem } from "@/components/common/avatar-item";
 import { Button } from "@/components/ui/button";
 import { OrderItem } from "@/interfaces/IOrder";
 import { getDateValue } from "@/lib/common";
+import { toast } from "sonner";
 
 interface PastOrderResultProps {
   imageUrl: string;
@@ -17,9 +18,11 @@ interface PastOrderResultProps {
   price: number;
   promotion_amount: number;
   status: string;
+  id: string;
 }
 
 export const PastOrderResult = ({
+  id,
   imageUrl,
   items,
   purchaseDate,
@@ -27,6 +30,7 @@ export const PastOrderResult = ({
   promotion_amount,
   status,
 }: PastOrderResultProps) => {
+  const { t } = useTranslation();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const { year, month, date } = purchaseDate;
 
@@ -50,21 +54,19 @@ export const PastOrderResult = ({
             </span>
           </p>
           <p className="text-xs text-muted-foreground md:text-sm xl:text-xl">
-            {getDateValue(+year, +month, +date)} .{" "}
-            {status.replace("_", "").toUpperCase()}
+            {getDateValue(+year, +month, +date)} . {status.replace("_", " ")}
           </p>
         </div>
       </div>
       <div className="flex justify-center text-center">
-        <Link to="/">
-          <Button
-            variant="secondary"
-            size={isMobile ? "sm" : "lg"}
-            className="rounded-full hover:bg-[#29612a] hover:text-white/80"
-          >
-            Order Details
-          </Button>
-        </Link>
+        <Button
+          onClick={() => toast.info(`orderId: ${id}`)}
+          variant="secondary"
+          size={isMobile ? "sm" : "lg"}
+          className="rounded-full hover:bg-[#29612a] hover:text-white/80"
+        >
+          {t("ORDER_DETAILS")}
+        </Button>
       </div>
     </div>
   );

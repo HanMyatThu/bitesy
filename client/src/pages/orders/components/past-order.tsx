@@ -14,6 +14,7 @@ export const PastOrder = ({ data }: PastOrderProps) => {
       {data.map((order) => (
         <PastOrderResult
           key={order._id}
+          id={order._id}
           imageUrl={order.items[0].item.product.image.url}
           items={order.items}
           purchaseDate={order.date}

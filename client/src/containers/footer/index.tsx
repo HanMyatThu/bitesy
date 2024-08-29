@@ -1,4 +1,3 @@
-import { IconButton } from "@/components/common/icon-button";
 import {
   HomeIcon,
   LucideIcon,
@@ -6,6 +5,8 @@ import {
   User,
   NotepadText,
 } from "lucide-react";
+
+import { IconButton } from "@/components/common/icon-button";
 
 interface FooterMenuProps {
   id: number;
@@ -17,25 +18,25 @@ const footerMenu: FooterMenuProps[] = [
   {
     id: 1,
     icon: HomeIcon,
-    label: "Home",
+    label: "HOME",
     href: "/",
   },
   {
     id: 2,
     icon: TextSearch,
-    label: "Browse",
+    label: "BROWSE",
     href: "/",
   },
   {
     id: 3,
     icon: NotepadText,
-    label: "Orders",
+    label: "ORDERS",
     href: "/orders",
   },
   {
     id: 4,
     icon: User,
-    label: "Account",
+    label: "ACCOUNT",
     href: "/",
   },
 ];

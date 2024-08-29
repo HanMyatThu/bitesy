@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { ToolTipHint } from "@/components/common/tooltip-hint";
@@ -16,6 +17,7 @@ export const CardItem = ({
   label,
   price,
 }: CardItemProps) => {
+  const { t } = useTranslation();
   return (
     <div className="group flex flex-col gap-y-2 transition-all">
       <div className="relative" onClick={onClick}>
@@ -25,7 +27,7 @@ export const CardItem = ({
           className="aspect-video object-cover transition-all group-hover:opacity-70 group-hover:shadow-lg"
         />
         <div className="absolute bottom-2 right-2">
-          <ToolTipHint asChild side="bottom" label="Add to Cart">
+          <ToolTipHint asChild side="bottom" label={t("ADD_TO_CART")}>
             <Button
               variant="ghost"
               size="icon"

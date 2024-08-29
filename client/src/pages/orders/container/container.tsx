@@ -1,5 +1,6 @@
 import { Info, NotepadText, StretchHorizontal } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PastOrder } from "../components/past-order";
@@ -11,6 +12,7 @@ import { Loading } from "@/components/common/loading";
 export const Container = () => {
   const { isAuthenticated } = useUser();
   const { data, isLoading } = useOrderList();
+  const { t } = useTranslation();
 
   if (!isAuthenticated) {
     return (
@@ -25,7 +27,7 @@ export const Container = () => {
                   className="text-xs text-green-500 underline"
                   to="/sign-in"
                 >
-                  Go To Sign In
+                  {t("GO_TO_LOGIN")}
                 </Link>
               </p>
             </div>
@@ -46,13 +48,13 @@ export const Container = () => {
           <TabsTrigger className="w-full" value="pastorders">
             <NotepadText className="size-4" />
             <p className="ml-2 text-xs font-semibold text-primary">
-              Past Orders
+              {t("PAST_ORDERS")}
             </p>
           </TabsTrigger>
           <TabsTrigger className="w-full" value="pastitems">
             <StretchHorizontal className="size-4" />
             <p className="ml-2 text-xs font-semibold text-primary">
-              Past Items
+              {t("PAST_ITEMS")}
             </p>
           </TabsTrigger>
         </TabsList>

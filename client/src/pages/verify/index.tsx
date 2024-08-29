@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { CircleX, Mail, Verified } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { verifyRoute } from "@/routes";
@@ -10,6 +11,7 @@ import { Loading } from "@/components/common/loading";
 
 export const VerifyUser = () => {
   const { id, token } = verifyRoute.useSearch();
+  const { t } = useTranslation();
   const { mutateAsync, data, isPending, isSuccess, error } = useVerifyUser();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export const VerifyUser = () => {
             <CircleX className="size-12" stroke="red" />
             <div className="flex flex-row gap-x-2 px-2">
               <p className="font-bold uppercase text-primary">
-                Unable to verified your email. Please try again.
+                {t("EMAIL_CANNOT_VERIFIED")}
               </p>
             </div>
           </div>
@@ -55,19 +57,18 @@ export const VerifyUser = () => {
           <div className="flex justify-center gap-x-3 text-center">
             <Mail className="mt-1 size-5" stroke="green" />
             <p className="text-lg font-bold uppercase text-primary">
-              Your Email is Verified
+              {t("EMAIL_VERIFIED")}
             </p>{" "}
             <Verified className="mt-1 size-5" stroke="green" />
           </div>
           <div className="mt-4">
             <p className="text-xs font-semibold text-muted-foreground md:text-sm">
-              You have successfully verified your email. You can start using
-              bitesy.
+              {t("EMAIL_VERIFIED_INFO")}
             </p>
           </div>
           <Link to="/sign-in">
             <Button variant="link" size="sm">
-              Go to Login
+              {t("GO_TO_LOGIN")}
             </Button>
           </Link>
         </div>

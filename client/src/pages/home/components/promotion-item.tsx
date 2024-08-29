@@ -25,7 +25,7 @@ export const PromotionItem = ({
     >
       <div className="group-hover:bg flex h-full flex-col justify-between">
         <p className="flex-nowrap text-pretty text-sm font-semibold text-black/80">
-          {label} <span className="text-green-800">{amount}$</span>
+          {label} <span>{amount}$</span>
         </p>
         <Button
           onClick={onCLick}

@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { ToggleTheme } from "@/components/darktheme/toggle-theme";
 import { IconButton } from "@/components/common/icon-button";
@@ -19,6 +20,7 @@ import { useCartStore } from "@/store/use-cart";
 
 export const Actions = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
+  const { t } = useTranslation();
 
   const { isAuthenticated } = useUser();
   const { onExpend, items } = useCartStore((state) => state);
@@ -40,7 +42,7 @@ export const Actions = () => {
         )}
       >
         <div className="hidden md:flex lg:flex xl:flex">
-          <ToolTipHint label="Orders" side="bottom">
+          <ToolTipHint label={t("ORDERS")} side="bottom">
             <IconButton href="/orders" icon={NotepadText} />
           </ToolTipHint>
         </div>
@@ -63,7 +65,7 @@ export const Actions = () => {
           {!isAuthenticated ? (
             <Link to="/sign-in" className="justify-center text-center">
               <Button variant="ghost">
-                Sign In <LogIn className="ml-1 mt-1 size-4" />
+                {t("SIGN_IN")} <LogIn className="ml-1 mt-1 size-4" />
               </Button>
             </Link>
           ) : (
@@ -73,7 +75,7 @@ export const Actions = () => {
               className="flex flex-row gap-x-1"
             >
               <ExternalLinkIcon className="size-3" />
-              <p className="text-sm text-primary">Sign Out</p>
+              <p className="text-sm text-primary">{t("SIGN_OUT")}</p>
             </Button>
           )}
         </div>

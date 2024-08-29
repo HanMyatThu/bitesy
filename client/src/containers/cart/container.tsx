@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Loader2, ShoppingBag, Trash, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import {
   Drawer,
@@ -29,6 +30,7 @@ export const Container = () => {
     removeCartItem,
     clearCartItem,
   } = useCartStore((state) => state);
+  const { t } = useTranslation();
   const { user } = useUser();
   const [selected, setSelected] = useState("");
   const { mutateAsync, reset, data, error, isPending } = useOrderCreate();
@@ -102,10 +104,10 @@ export const Container = () => {
       <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen rounded-none sm:w-[380px] md:w-[480px]">
         <DrawerHeader>
           <DrawerTitle className="flex flex-row gap-x-2 font-sans font-semibold">
-            Check Out <ShoppingBag className="size-4" />
+            {t("CHECK_OUT")} <ShoppingBag className="size-4" />
           </DrawerTitle>
           <DrawerDescription className="flex justify-start">
-            You have {items.length} items inside your cart.
+            {t("ITEMS_COUNT", { count: items.length })}
           </DrawerDescription>
           <div
             onClick={onCollapsed}
@@ -134,7 +136,7 @@ export const Container = () => {
                     variant="ghost"
                     className="flex flex-row gap-x-2 text-xs font-semibold text-red-900 hover:bg-white/90 hover:text-red-500 dark:text-red-400 dark:hover:bg-primary-foreground"
                   >
-                    Remove All Items <Trash className="size-3" />
+                    {t("REMOVE_ALL_ITEMS")} <Trash className="size-3" />
                   </Button>
                 </div>
                 <div className="mb-6 flex items-center px-2">
@@ -150,7 +152,7 @@ export const Container = () => {
                 className="mx-auto h-full cursor-pointer justify-center text-center font-mono text-lg underline hover:text-primary/80"
                 onClick={onCollapsed}
               >
-                Browse more items
+                {t("BROSWER_MORE")}
               </div>
             )}
           </ScrollArea>
@@ -158,10 +160,10 @@ export const Container = () => {
         <DrawerFooter className="fixed bottom-0 w-full">
           <div className="mt-5 flex flex-col justify-end text-right">
             <div className="font-mono text-sm">
-              Total Price - {`$ ${priceInfo?.totalPrice}`}
+              {t("TOTAL_PRICE")} - {`$ ${priceInfo?.totalPrice}`}
             </div>
             <p className="font-mono text-xs text-muted-foreground">
-              Discount Price - {`$ ${priceInfo?.promotion_amount}`}
+              {t("DISCOUNT_PRICE")} - {`$ ${priceInfo?.promotion_amount}`}
             </p>
           </div>
           <Button
@@ -170,7 +172,7 @@ export const Container = () => {
             disabled={!items.length || isPending}
             className="text-blue-300 dark:text-blue-900"
           >
-            Checkout {`$ ${priceInfo?.totalPrice}`}
+            {t("CHECK_OUT")} {`$ ${priceInfo?.totalPrice}`}
             {isPending && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
           </Button>
         </DrawerFooter>

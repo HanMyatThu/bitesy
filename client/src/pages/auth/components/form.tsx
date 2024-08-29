@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { AlertOctagon, Loader2Icon } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +26,7 @@ interface AuthFormProps {
 }
 
 export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { setUser } = useUser();
   const {
@@ -51,7 +53,7 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
   useEffect(() => {
     if (isSignIn && loginData?.profile && isLoginSuccess) {
       setUser(loginData.profile);
-      toast.success("You have login successfully");
+      toast.success(t("LOGIN_SUCCESS"));
       setTimeout(() => {
         navigate({ to: "/" });
       }, 3000);
@@ -66,6 +68,7 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
     singUpData,
     setUser,
     navigate,
+    t,
   ]);
 
   const formSchema = z.object({
@@ -111,9 +114,7 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
     }
   };
 
-  const label = isSignIn
-    ? "You don't have an account?"
-    : "You have already got an account?";
+  const label = isSignIn ? t("NO_ACCOUNT") : t("YES_ACCOUNT");
 
   return (
     <Form {...form}>

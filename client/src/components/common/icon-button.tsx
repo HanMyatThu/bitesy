@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 
@@ -18,6 +19,7 @@ export const IconButton = ({
   onClick,
   info,
 }: IconButtonProps) => {
+  const { t } = useTranslation();
   return (
     <Link
       to={href}
@@ -36,7 +38,7 @@ export const IconButton = ({
         )}
         <Icon className="size-5" />
         {label && (
-          <p className="text-xs font-light text-muted-foreground">{label}</p>
+          <p className="text-xs font-light text-muted-foreground">{t(label)}</p>
         )}
       </Button>
     </Link>

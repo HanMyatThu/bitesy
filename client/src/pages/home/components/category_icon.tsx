@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,7 @@ export const CategoryIcon = ({
   className,
   value,
 }: CategoryIconProps) => {
+  const { t } = useTranslation();
   return (
     <Button
       variant="ghost"
@@ -26,7 +28,9 @@ export const CategoryIcon = ({
       onClick={() => onClick(value)}
     >
       <Icon stroke="orange" className={cn("h-10 w-10", className)} />
-      <p className="text-xs font-semibold text-muted-foreground">{title}</p>
+      <p className="text-xs font-semibold text-muted-foreground">
+        {t(title.toUpperCase())}
+      </p>
     </Button>
   );
 };

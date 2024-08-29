@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { useTranslation } from "react-i18next";
 
 interface ILanguage {
   key: string;
@@ -14,18 +15,18 @@ interface ILanguage {
 }
 
 export function LanguagePicker() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const currentLanguage: string = i18n.language || "en";
 
   const languages: ILanguage[] = [
     {
       key: "en",
-      value: "English",
+      value: "ENGLISH",
     },
     {
       key: "nl",
-      value: "Dutch",
+      value: "DUTCH",
     },
   ];
 
@@ -42,7 +43,7 @@ export function LanguagePicker() {
               className="justify-left"
               onClick={() => i18n.changeLanguage(language.key)}
             >
-              <span className="text-xs 2xl:text-sm">{language.value}</span>
+              <span className="text-xs 2xl:text-sm">{t(language.value)}</span>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
