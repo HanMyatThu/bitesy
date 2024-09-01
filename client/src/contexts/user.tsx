@@ -3,13 +3,13 @@ import {
   ReactNode,
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 
 import { EUserRole, IUser } from "@/interfaces/IUser";
 import { useGetMe } from "@/hooks/user";
-import { useRefreshToken } from "@/hooks/refresh-token";
 
 interface IUserContextData {
   user: IUser;
@@ -27,8 +27,12 @@ const UserContext = createContext<IUserContextData>({} as IUserContextData);
 const UserProvider = ({ children }: IProps) => {
   const [user, setUser] = useState({} as IUser);
   const isTokenExisted = sessionStorage.getItem("accesstoken")!;
-  const { data, error } = useGetMe(isTokenExisted);
-  console.log(error, "error");
+  const { data, isSuccess } = useGetMe(isTokenExisted);
+  useEffect(() => {
+    if (data.profile && isSuccess) {
+      setUser(data.profile);
+    }
+  }, [data, isSuccess]);
 
   const value = useMemo(() => {
     return {
