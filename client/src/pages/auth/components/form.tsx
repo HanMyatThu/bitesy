@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -6,6 +5,7 @@ import { AlertOctagon, Loader2Icon } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {

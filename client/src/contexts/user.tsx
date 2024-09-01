@@ -35,12 +35,21 @@ const UserProvider = ({ children }: IProps) => {
   }, [data, isSuccess]);
 
   const value = useMemo(() => {
-    return {
-      user,
-      isAuthenticated: !!user.role,
-      isAdmin: user.role && user.role === EUserRole.ADMIN,
-      setUser,
-    };
+    if (user.role) {
+      return {
+        user,
+        isAuthenticated: !!user.role,
+        isAdmin: user.role && user.role === EUserRole.ADMIN,
+        setUser,
+      };
+    } else {
+      return {
+        user: {} as IUser,
+        isAdmin: false,
+        isAuthenticated: false,
+        setUser,
+      };
+    }
   }, [user]);
 
   return (

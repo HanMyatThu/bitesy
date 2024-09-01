@@ -36,9 +36,11 @@ export const Actions = () => {
       toast.success(data.message);
       reset();
       setUser({} as IUser);
-      navigate({
-        to: "/sign-in",
-      });
+      setTimeout(() => {
+        navigate({
+          to: "/sign-in",
+        });
+      }, 500);
     }
   }, [data, isSuccess, reset, setUser, navigate]);
 
@@ -86,10 +88,10 @@ export const Actions = () => {
               )}
               <ShoppingCart className="size-5" />
             </Button>
-            <ToggleTheme />
-            <LanguagePicker />
           </>
         )}
+        <ToggleTheme />
+        <LanguagePicker />
         <div className="hidden md:flex lg:flex xl:flex">
           {!isAuthenticated ? (
             <Link to="/sign-in" className="justify-center text-center">

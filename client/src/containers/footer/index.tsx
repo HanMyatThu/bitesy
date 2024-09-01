@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { IconButton } from "@/components/common/icon-button";
+import { useUser } from "@/contexts/user";
 
 interface FooterMenuProps {
   id: number;
@@ -42,6 +43,11 @@ const footerMenu: FooterMenuProps[] = [
 ];
 
 export const Footer = () => {
+  const { isAdmin } = useUser();
+
+  if (isAdmin) {
+    return null;
+  }
   return (
     <footer className="fixed bottom-0 z-50 flex h-16 w-full flex-row items-center justify-between border-t bg-background px-8 shadow-sm md:hidden">
       {footerMenu.map((menu) => (
