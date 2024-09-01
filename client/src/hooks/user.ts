@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/services/api-client";
 import { IUser } from "@/interfaces/IUser";
@@ -20,6 +20,13 @@ interface IUserLoginResponse {
 
 interface IUserRegisterResponse {
   data: { message: string };
+  error: null | { message: string };
+}
+
+interface IGetMeResponse {
+  data: {
+    profile: IUser;
+  };
   error: null | { message: string };
 }
 
@@ -95,4 +102,21 @@ export function useUserLogout() {
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["user-sign-out"] }),
   });
+}
+
+export function useGetMe(token: string) {
+  const enabled = !!token;
+  async function fetchGetMe() {
+    const { data } = await api.get<IGetMeResponse>(`/api/auth/profile`);
+    return data.data;
+  }
+
+  const query = useQuery({
+    queryKey: ["user-get-me"],
+    queryFn: fetchGetMe,
+    enabled: enabled,
+    initialData: {} as { profile: IUser },
+  });
+
+  return query;
 }

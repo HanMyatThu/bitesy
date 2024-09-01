@@ -21,6 +21,39 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.config.url === "/api/auth/refresh-token" &&
+      error.response.status === 401
+    ) {
+      originalRequest._retry = true;
+      return Promise.reject(error);
+    }
+    if (
+      error.response.status === 401 &&
+      error.response?.data?.error?.message.includes("expired") &&
+      !originalRequest._retry
+    ) {
+      console.log("retry");
+      originalRequest._retry = true;
+      const refreshToken = sessionStorage.getItem("refreshtoken");
+      const data = await api.post(`/api/auth/refresh-token`, {
+        refreshToken,
+      });
+      if (data.data) {
+        sessionStorage.setItem("accessToken", data.data?.tokens?.access);
+        sessionStorage.setItem("refreshtoken", data.data?.tokens?.refresh);
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+
 const retrieveToken = async () => {
   const accessToken = sessionStorage.getItem("accesstoken");
   return accessToken;

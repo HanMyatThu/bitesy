@@ -1,7 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
 import { EOrderStatus } from "@/enum/order-status";
-import { IOrderItem } from "@/interfaces/IOrderItem";
 import { IDateObject } from "@/interfaces/IDateObject";
 
 interface OrderDocument extends Document {
@@ -58,7 +57,7 @@ const OrderSchema = new mongoose.Schema<OrderDocument, {}, null>(
     status: {
       type: String,
       enum: EOrderStatus,
-      default: EOrderStatus.PAYMENT_PROCESSING,
+      default: EOrderStatus.PREPARING,
     },
     promotion: {
       type: mongoose.Schema.Types.ObjectId,

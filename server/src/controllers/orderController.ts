@@ -142,3 +142,33 @@ export const getLatestOrderlist: RequestHandler = async (req, res) => {
     toJson(null, 500, "Server Error", res);
   }
 };
+
+/**
+ * Get ALl Orders For Admin
+ * 1. check if user is authenticated and role is ADMIN
+ * 2. find orders from database
+ * 3. return the order response
+ */
+export const getAllOrders: RequestHandler = async (_, res) => {
+  try {
+    const orders = await Order.find()
+      .sort("-createdAt")
+      .populate("promotion")
+      .populate({
+        path: "customer_id",
+        select: ["name", "id"],
+      })
+      .populate({
+        path: "items.item",
+        populate: {
+          path: "product",
+          model: "products",
+          select: ["image", "name"],
+        },
+      });
+
+    toJson(orders, 200, null, res);
+  } catch {
+    toJson(null, 50, "Sever Error", res);
+  }
+};
