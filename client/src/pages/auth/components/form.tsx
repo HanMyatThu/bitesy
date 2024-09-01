@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { useUserLogin, useUserRegister } from "@/hooks/user";
 import { getErrorMessage } from "@/lib/common";
 import { useUser } from "@/contexts/user";
+import { EUserRole } from "@/interfaces/IUser";
 
 interface AuthFormProps {
   isSignIn: boolean;
@@ -54,9 +55,15 @@ export const AuthForm = ({ isSignIn = false }: AuthFormProps) => {
     if (isSignIn && loginData?.profile && isLoginSuccess) {
       setUser(loginData.profile);
       toast.success(t("LOGIN_SUCCESS"));
-      setTimeout(() => {
-        navigate({ to: "/" });
-      }, 3000);
+      if (loginData.profile.role === EUserRole.ADMIN) {
+        setTimeout(() => {
+          navigate({ to: "/dashboard" });
+        }, 3000);
+      } else {
+        setTimeout(() => {
+          navigate({ to: "/" });
+        }, 3000);
+      }
     } else if (!isSignIn && singUpData?.message && isRegisterSuccess) {
       toast.success(singUpData.message);
     }

@@ -11,8 +11,13 @@ import "./index.css";
 import "@/services/i18n.ts";
 
 const InnerApp = () => {
-  const { user, isAuthenticated } = useUser();
-  return <RouterProvider router={router} context={{ user, isAuthenticated }} />;
+  const { user, isAuthenticated, isAdmin } = useUser();
+  return (
+    <RouterProvider
+      router={router}
+      context={{ user, isAuthenticated, isAdmin }}
+    />
+  );
 };
 
 // eslint-disable-next-line react-refresh/only-export-components

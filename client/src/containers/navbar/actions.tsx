@@ -27,7 +27,7 @@ export const Actions = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const { isAuthenticated, setUser } = useUser();
+  const { isAuthenticated, setUser, isAdmin } = useUser();
   const { mutateAsync, reset, data, isSuccess, isPending } = useUserLogout();
   const { onExpend, items } = useCartStore((state) => state);
 
@@ -66,26 +66,30 @@ export const Actions = () => {
           isMobile ? "gap-x-2" : "gap-x-4",
         )}
       >
-        <div className="hidden md:flex lg:flex xl:flex">
-          <ToolTipHint label={t("ORDERS")} side="bottom">
-            <IconButton href="/orders" icon={NotepadText} />
-          </ToolTipHint>
-        </div>
-        <Button
-          onClick={handleOpenCart}
-          variant="ghost"
-          size="icon"
-          className="relative flex cursor-pointer flex-col items-center justify-center text-muted-foreground hover:text-primary"
-        >
-          {items.length > 0 && (
-            <div className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-red-700 text-white ring-1 ring-red-600">
-              <p className="text-xs">{items.length}</p>
+        {!isAdmin && (
+          <>
+            <div className="hidden md:flex lg:flex xl:flex">
+              <ToolTipHint label={t("ORDERS")} side="bottom">
+                <IconButton href="/orders" icon={NotepadText} />
+              </ToolTipHint>
             </div>
-          )}
-          <ShoppingCart className="size-5" />
-        </Button>
-        <ToggleTheme />
-        <LanguagePicker />
+            <Button
+              onClick={handleOpenCart}
+              variant="ghost"
+              size="icon"
+              className="relative flex cursor-pointer flex-col items-center justify-center text-muted-foreground hover:text-primary"
+            >
+              {items.length > 0 && (
+                <div className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-red-700 text-white ring-1 ring-red-600">
+                  <p className="text-xs">{items.length}</p>
+                </div>
+              )}
+              <ShoppingCart className="size-5" />
+            </Button>
+            <ToggleTheme />
+            <LanguagePicker />
+          </>
+        )}
         <div className="hidden md:flex lg:flex xl:flex">
           {!isAuthenticated ? (
             <Link to="/sign-in" className="justify-center text-center">

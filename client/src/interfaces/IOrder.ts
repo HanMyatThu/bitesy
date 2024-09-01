@@ -1,14 +1,18 @@
 import { IPromotion } from "./IPromotion";
 
+type CustomerType = {
+  _id: string;
+  name: string;
+};
 export interface IOrder {
   _id: string;
-  customer_id: string;
+  customer_id: string | CustomerType;
   date: {
     year: string;
     month: string;
     date: string;
   };
-  promotions: IPromotion[];
+  promotion: IPromotion;
   promotion_amount: number;
   price: number;
   items: [

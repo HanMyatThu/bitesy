@@ -17,10 +17,12 @@ import {
   productSearchSchema,
   verifyUserSchema,
 } from "@/services/params-schema";
+import { DashBoard } from "./pages/dashboard";
 
 interface IRouterContext {
   user: IUser;
   isAuthenticated: boolean;
+  isAdmin: boolean;
 }
 
 export const rootRoute = createRootRouteWithContext<IRouterContext>()({
@@ -32,6 +34,13 @@ export const homeRoute = createRoute({
   path: "/",
   component: HomePage,
   validateSearch: productSearchSchema,
+  beforeLoad: ({ context }) => {
+    if (context.isAdmin) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
 });
 
 export const signInRoute = createRoute({
@@ -89,12 +98,31 @@ export const verifyRoute = createRoute({
   validateSearch: verifyUserSchema,
 });
 
+export const dashboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/dashboard",
+  component: DashBoard,
+  beforeLoad: ({ context }) => {
+    if (!context.isAuthenticated || !context.isAdmin) {
+      throw redirect({
+        to: "/",
+        search: {
+          pageNo: "1",
+          category: "",
+          limit: "8",
+        },
+      });
+    }
+  },
+});
+
 const routeTree = rootRoute.addChildren([
   homeRoute,
   orderRoute,
   signInRoute,
   signUpRoute,
   verifyRoute,
+  dashboardRoute,
 ]);
 
 export const router = createRouter({
@@ -102,6 +130,7 @@ export const router = createRouter({
   context: {
     user: {} as IUser,
     isAuthenticated: false,
+    isAdmin: false,
   },
   defaultNotFoundComponent: NotFoundPage,
 });

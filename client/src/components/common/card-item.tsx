@@ -6,9 +6,9 @@ import { ToolTipHint } from "@/components/common/tooltip-hint";
 
 interface CardItemProps {
   imageUrl: string;
-  onClick: () => void;
+  onClick?: () => void;
   label: string;
-  price: string;
+  price?: string;
 }
 
 export const CardItem = ({
@@ -26,21 +26,23 @@ export const CardItem = ({
           alt="product-items"
           className="aspect-video object-cover transition-all group-hover:opacity-70 group-hover:shadow-lg"
         />
-        <div className="absolute bottom-2 right-2">
-          <ToolTipHint asChild side="bottom" label={t("ADD_TO_CART")}>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full bg-white hover:bg-white/80 dark:bg-orange-500 dark:hover:bg-orange-700"
-            >
-              <Plus className="size-4" />
-            </Button>
-          </ToolTipHint>
-        </div>
+        {onClick && (
+          <div className="absolute bottom-2 right-2">
+            <ToolTipHint asChild side="bottom" label={t("ADD_TO_CART")}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full bg-white hover:bg-white/80 dark:bg-orange-500 dark:hover:bg-orange-700"
+              >
+                <Plus className="size-4" />
+              </Button>
+            </ToolTipHint>
+          </div>
+        )}
       </div>
       <div>
         <p className="text-sm font-semibold text-primary">{label}</p>
-        <p className="text-xs text-muted-foreground"> $ {price}</p>
+        {price && <p className="text-xs text-muted-foreground"> $ {price}</p>}
       </div>
     </div>
   );

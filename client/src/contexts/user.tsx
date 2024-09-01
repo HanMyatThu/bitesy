@@ -11,7 +11,7 @@ import { EUserRole, IUser } from "@/interfaces/IUser";
 
 interface IUserContextData {
   user: IUser;
-  isNormalUser: boolean;
+  isAdmin: boolean;
   isAuthenticated: boolean;
   setUser: Dispatch<IUser>;
 }
@@ -29,7 +29,7 @@ const UserProvider = ({ children }: IProps) => {
     return {
       user,
       isAuthenticated: !!user.role,
-      isNormalUser: user.role && user.role === EUserRole.USER,
+      isAdmin: user.role && user.role === EUserRole.ADMIN,
       setUser,
     };
   }, [user]);

@@ -1,13 +1,15 @@
-import { Actions } from "./actions"
-import { Logo } from "./logo"
-import { SearchInput } from "./search-input"
+import { useUser } from "@/contexts/user";
+import { Actions } from "./actions";
+import { Logo } from "./logo";
+import { SearchInput } from "./search-input";
 
 export const Navbar = () => {
+  const { isAdmin } = useUser();
   return (
-    <nav className="flex fixed top-0 w-full h-20 z-50 bg-background px-2 lg:px-4 justify-between items-center shadow-sm">
+    <nav className="fixed top-0 z-50 flex h-20 w-full items-center justify-between bg-background px-2 shadow-sm lg:px-4">
       <Logo />
-      <SearchInput />
+      {!isAdmin && <SearchInput />}
       <Actions />
     </nav>
-  )
-}
+  );
+};
