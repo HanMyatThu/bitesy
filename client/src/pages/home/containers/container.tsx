@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { ElementRef, useRef } from "react";
+import { ElementRef, useEffect, useRef } from "react";
 
 import { CategoryIcon, CategoryIconSeketon } from "../components/category_icon";
 import { Separator } from "@/components/ui/separator";
@@ -35,7 +35,7 @@ const categoryData = [
 
 export const Container = () => {
   const scrollRef = useRef<ElementRef<"div">>(null);
-  const { user, isAuthenticated } = useUser();
+  const { user, isAuthenticated, isAdmin } = useUser();
   const { items, updateCartItem, onExpend } = useCartStore((state) => state);
   const navigate = useNavigate();
   const { pageNo = "1", category = "", limit = "8" } = homeRoute.useSearch();
@@ -62,6 +62,14 @@ export const Container = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (isAdmin) {
+      navigate({
+        to: "/dashboard",
+      });
+    }
+  }, [isAdmin, navigate]);
 
   const handleCategory = (category: string) => {
     navigate({

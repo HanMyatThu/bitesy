@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +18,7 @@ export const PromotionItem = ({
   amount,
   onCLick,
 }: PromotionItemsProps) => {
+  const { t } = useTranslation();
   return (
     <div
       className={cn(
@@ -31,9 +34,9 @@ export const PromotionItem = ({
           onClick={onCLick}
           variant="outline"
           size="sm"
-          className="w-20 rounded-full hover:bg-secondary/80"
+          className="w-fit rounded-full hover:bg-secondary/80"
         >
-          Deal
+          {t("DEAL")}
         </Button>
       </div>
       <div className="h-full">

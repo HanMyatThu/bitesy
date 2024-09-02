@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
+import { PlusCircle, ShoppingCart } from "lucide-react";
+
 import { ToolTipHint } from "@/components/common/tooltip-hint";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IProduct } from "@/interfaces/IProduct";
-import { PlusCircle, ShoppingCart } from "lucide-react";
 
 interface ProductItemProps {
   data: IProduct;
@@ -10,6 +12,7 @@ interface ProductItemProps {
 }
 
 export const ProductItem = ({ data, onClick }: ProductItemProps) => {
+  const { t } = useTranslation();
   const handleOnClick = () => {
     onClick(data);
   };
@@ -20,7 +23,7 @@ export const ProductItem = ({ data, onClick }: ProductItemProps) => {
           onClick={handleOnClick}
           className="absolute top-[45%] flex h-6 w-full cursor-pointer flex-row justify-center text-center opacity-0 transition group-hover:bg-white/80 group-hover:opacity-90 dark:text-black/80"
         >
-          <ShoppingCart className="mr-2 mt-1 size-4" /> Add
+          <ShoppingCart className="mr-2 mt-1 size-4" /> {t("ADD")}
         </div>
         <img
           src={data.image?.url}
@@ -37,7 +40,7 @@ export const ProductItem = ({ data, onClick }: ProductItemProps) => {
           <p className="text-xs font-semibold text-muted-foreground">4.0 ★</p>
         </div>
         <div>
-          <ToolTipHint label="add to cart" asChild side="left">
+          <ToolTipHint label={t("ADD_TO_CART")} asChild side="left">
             <Button
               onClick={handleOnClick}
               className="hover:bg-white dark:bg-background"
