@@ -78,13 +78,13 @@ export const ProfileDrawer = ({
             </p>
           </div>
         </div>
-        <ScrollArea className="mt-5 h-full bg-cyan-50">
-          <div className="flex h-52 w-full items-center justify-center">
+        <ScrollArea className="mt-5 h-full bg-cyan-50 dark:bg-primary-foreground">
+          <div className="flex h-52 w-full items-center justify-center dark:bg-primary-foreground">
             <p className="text-wrap px-4">
               Get Ready to earn points and redeem amazing rewards. Stay turned!
             </p>
           </div>
-          <div className="flex flex-row gap-x-6 border-y border-black/10 p-4">
+          <div className="flex flex-row gap-x-6 border-y border-black/10 p-4 dark:border-white/40 dark:bg-primary-foreground">
             <Gem className="size-10 animate-bounce" stroke="black" />
             <div className="flex flex-col justify-center text-left">
               <h5 className="text-sm font-semibold text-primary">
@@ -96,8 +96,8 @@ export const ProfileDrawer = ({
               </p>
             </div>
           </div>
-          <Separator className="h-2" />
-          <div className="mb-8 mt-8 flex flex-col gap-y-5">
+          <Separator className="h-2 dark:bg-white" />
+          <div className="mb-8 mt-8 flex flex-col gap-y-5 dark:bg-primary-foreground">
             <div className="flex w-full items-center justify-center">
               <img src="/images/logo.png" className="size-20 object-cover" />
             </div>
