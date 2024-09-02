@@ -39,7 +39,6 @@ api.interceptors.response.use(
       error.response?.data?.error?.message.includes("expired") &&
       !originalRequest._retry
     ) {
-      console.log("retry");
       originalRequest._retry = true;
       const refreshToken = sessionStorage.getItem("refreshtoken");
       const data = await api.post(`/api/auth/refresh-token`, {

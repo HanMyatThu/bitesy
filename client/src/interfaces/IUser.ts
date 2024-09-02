@@ -1,5 +1,17 @@
 import { IPromotion } from "@/interfaces/IPromotion";
 
+export interface IBonusPoint {
+  _id: string;
+  bonus_point: number;
+  user: string;
+}
+
+export interface ITier {
+  _id: string;
+  type: string;
+  point: number;
+}
+
 export interface IUser {
   id: string;
   name: string;
@@ -12,6 +24,8 @@ export interface IUser {
     url?: string;
   };
   promotions: IPromotion[];
+  tier: ITier;
+  bonus_point: IBonusPoint;
 }
 
 export enum EUserRole {
